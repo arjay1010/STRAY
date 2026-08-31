@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的網頁首頁</title>
+    <style>
+        /* 1. 基礎頁面重設 */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        /* 2. 第一段落：封面區塊設定 */
+        .cover-section {
+            position: relative;
+            width: 100%;
+            height: 100vh; /* 佔滿整個螢幕高度 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* 3. YouTube 影片背景定位 */
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1; /* 放在最底層 */
+            pointer-events: none; /* 防止使用者點擊影片 */
+        }
+
+        /* 4. 滿版 RWD 影片縮放公式 */
+        .video-background iframe {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100vw;
+            height: 56.25vw; /* 16:9 比例 */
+            min-height: 100vh;
+            min-width: 177.77vh; 
+            transform: translate(-50%, -50%);
+        }
+
+        /* 5. 黑色半透明遮罩（讓文字更好讀） */
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.45); /* 數字越大越黑 */
+            z-index: 2;
+        }
+
+        /* 6. 封面文字內容 */
+        .cover-content {
+            position: relative;
+            z-index: 3; /* 放在遮罩與影片之上 */
+            text-align: center;
+            color: #ffffff;
+            padding: 0 20px;
+        }
+
+        .cover-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        .cover-content p {
+            font-size: 1.5rem;
+            margin-bottom: 35px;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+        }
+
+        /* 7. 按鈕樣式 */
+        .cover-btn {
+            display: inline-block;
+            padding: 14px 35px;
+            background-color: #ff0000; /* YouTube 紅色 */
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .cover-btn:hover {
+            background-color: #cc0000;
+            transform: translateY(-3px); /* 懸浮往上微調 */
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        /* 預留：第二段落之後的基礎樣式（可刪除） */
+        .other-section {
+            padding: 80px 20px;
+            text-align: center;
+            background: #f9f9f9;
+            min-height: 50vh;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========================================== -->
+    <!-- 第一段落：YouTube 影片背景封面 -->
+    <!-- ========================================== -->
+    <section id="part1" class="cover-section">
+        
+        <!-- 影片區塊：請把下方兩處的 t5WnN-gpxoo 改成你的影片 ID -->
+        <div class="video-background">
+            <iframe src="https://youtube.com" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+            </iframe>
+        </div>
+
+        <!-- 遮罩 -->
+        <div class="video-overlay"></div>
+
+        <!-- 核心文字與按鈕 -->
+        <div class="cover-content">
+            <h1>歡迎來到我的網站</h1>
+            <p>精彩的生活，從這裡開始探索</p>
+            <a href="#part2" class="cover-btn">往下看更多</a>
+        </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 第二段落：預留區塊（你可以直接把第二個 HTML 的 body 放進來） -->
+    <!-- ========================================== -->
+    <section id="part2" class="other-section">
+        <h2>第二段落預留位置</h2>
+        <p>在這裡貼上你第二個 HTML 的內容...</p>
+    </section>
+
+</body>
+</html>
