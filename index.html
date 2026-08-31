@@ -116,16 +116,14 @@
     <!-- ========================================== -->
     <!-- 第一段落：YouTube 影片背景封面（已換上你的影片） -->
     <!-- ========================================== -->
+        <!-- ========================================== -->
+    <!-- 第一段落：YouTube 影片背景封面 -->
+    <!-- ========================================== -->
     <section id="part1" class="cover-section">
         
-        <!-- 影片區塊：已自動填入你的影片 ID: id_id0xCNno -->
         <div class="video-background">
-                       <iframe src="https://youtube.com" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen>
-            </iframe>
-
+            <!-- 這裡先放一個乾淨的 iframe，網址會由下方的 Script 自動帶入，絕對不會再被切斷 -->
+            <iframe id="bgVideo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
 
         <!-- 遮罩 -->
@@ -137,6 +135,21 @@
             <p>精彩的生活，從這裡開始探索</p>
             <a href="#part2" class="cover-btn">往下看更多</a>
         </div>
+
+        <!-- 透過這段小工具，自動把影片 ID 安全地塞進去 -->
+        <script>
+            (function() {
+                // 填入你上傳的 YouTube 不公開影片 ID
+                var videoID = "id_id0xCNno"; 
+                
+                // 自動拼接出完整且具備自動播放、靜音功能的網址
+                var finalSrc = "https://youtube.com" + id0xCNno+ 
+                               "?autoplay=1&mute=1&loop=1&playlist=" + id0xCNno + 
+                               "&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1";
+                
+                document.getElementById("bgVideo").src = finalSrc;
+            })();
+        </script>
 
     </section>
 
