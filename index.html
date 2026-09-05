@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>高質感金色導覽控制台</title>
     <style>
-        /* --- 全域重設 --- */
+                /* --- 全域重設（🏆終極解鎖版：徹底消滅手機版跨頁大空白） --- */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -22,6 +22,15 @@
         body::-webkit-scrollbar {
             display: none; /* 隱藏滾動條 Chrome/Safari */
         }
+
+        /* 📱 關鍵核心：當寬度小於 768px（手機直向）時，強制解除 html 與 body 的滿版鎖定 */
+        @media (max-width: 768px) {
+            html, body {
+                height: auto !important;
+                overflow-x: hidden !important;
+            }
+        }
+
 
         /* --- 右側金色圈圈導覽列 --- */
         .dot-navigation {
