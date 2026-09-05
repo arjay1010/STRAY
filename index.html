@@ -101,14 +101,14 @@
         }
 
 
-                       /* --- 頁一：最新消息圖片輪播（🏆終極滿版無黑邊：手機電腦強制塞滿螢幕） --- */
+                              /* --- 頁一：最新消息圖片輪播（🏆手機不裁切＋全螢幕融為一體技術） --- */
         .page1-carousel-section {
             background-color: #000;
         }
         .carousel-container {
             position: relative;
             width: 100%;
-            height: 100vh; /* 死死鎖定 100% 的全螢幕高度 */
+            height: 100vh; /* 無論任何裝置，死死霸佔 100% 全螢幕高度 */
             overflow: hidden;
             display: flex;
             align-items: center;
@@ -131,12 +131,12 @@
             z-index: 1;
         }
         
-        /* 🏆 關鍵核心修改：改用 cover，強制圖片像壁紙一樣鋪滿整個區塊，徹底消滅黑邊 */
+        /* 電腦版維持完美填滿（稍微裁切邊緣以達到震撼的無黑邊滿版視覺） */
         .carousel-slide img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* ✨ 核心黑科技：等比例放大填滿全螢幕，絕對不留黑色空格 */
-            object-position: center; /* 讓圖片的中心點永遠維持在螢幕正中央 */
+            object-fit: cover; 
+            object-position: center;
             display: block;
         }
         
@@ -168,24 +168,31 @@
             box-shadow: 0 0 10px #d4af37;
         }
 
-        /* 📱 專屬手機版 RWD 覆寫：保持 100% 全螢幕無黑邊填滿 */
+        /* 📱 專屬手機版黑科技優化：完美不裁切文字，且畫面上下一體化無黑邊 */
         @media (max-width: 768px) {
             .carousel-container {
-                height: 100vh !important; /* 手機版也是死死霸佔一整頁 */
+                height: 100vh !important; /* 保持全螢幕一整頁，不跟頁二擠在一起 */
+                background-color: #fff !important; /* 🏆 核心修改：將手機背景強制換成「純白色」與您的海報完美融合 */
+            }
+            .carousel-slide {
+                background-color: #fff !important; /* 確保輪播底色也是純白 */
             }
             .carousel-slide img {
-                width: 100%; /* 強制手機版圖片寬度 100% 填滿 */
-                height: 100%; /* 強制手機版圖片高度 100% 填滿 */
-                object-fit: cover; /* 手機版也強制執行無黑邊滿版技術 */
+                width: 100%;
+                height: auto;
+                object-fit: contain; /* 🏆 核心修改：圖片等比例縮放，確保所有字體 100% 完整顯示，絕不裁切 */
+                max-height: 100%;
             }
             .carousel-caption {
-                bottom: 40px; /* 讓手機版的切換按鈕留在螢幕最下方 */
+                bottom: 40px; /* 控制按鈕留在最下方的白色區塊，精緻且好點擊 */
             }
             .carousel-arrow {
+                background: rgba(0, 0, 0, 0.8); /* 在白底上換成深色深色按鈕，確保看得到 */
                 font-size: 1.1rem;
                 padding: 4px 14px;
             }
         }
+
 
 
 
