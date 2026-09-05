@@ -178,6 +178,7 @@
             transition: 0.5s;
             box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
         }
+                /* 🏆 修正版：確保圖標與文字在菱形內完美置中 */
         .base-card {
             position: absolute;
             width: 85px;
@@ -191,12 +192,13 @@
             justify-content: center;
             cursor: pointer;
             z-index: 3;
-            transition: all 0.3s ease;
             text-decoration: none;
             color: #fff;
+            transform-origin: center;
         }
+        
+        /* 懸停發光特效 */
         .base-card:hover {
-            transform: scale(1.1);
             box-shadow: 0 0 20px rgba(212, 175, 55, 0.8);
             background: #222;
         }
@@ -204,18 +206,31 @@
             box-shadow: 0 0 25px #d4af37;
             transform: translate(-50%, -50%) scale(1.2);
         }
+        
+        /* 🏆 關鍵修正：包覆一個容器並強制內容在反向旋轉後依然垂直置中 */
+        .base-card img, .base-card span {
+            transform-origin: center;
+            display: block;
+        }
+        
         .base-card img {
-            width: 32px;
-            height: 32px;
+            width: 30px;
+            height: 30px;
             margin-bottom: 5px;
             object-fit: contain;
+            transform: rotate(-45deg); /* 反轉 45 度 */
         }
         .base-card span {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             font-weight: bold;
             color: #d4af37;
             letter-spacing: 1px;
+            white-space: nowrap;
+            transform: rotate(-45deg); /* 反轉 45 度 */
+            text-align: center;
+            width: 100%;
         }
+
         .base-2nd { top: 0; left: 50%; transform: translateX(-50%); }                       
         .base-2nd:hover { transform: translateX(-50%) scale(1.1); }
         .base-3rd { top: 50%; left: 0; transform: translateY(-50%); }                       
@@ -409,8 +424,8 @@
                 </a>
 
                 <!-- 一壘：Facebook -->
-                <a href="https://facebook.com" target="_self" class="base-card base-1st">
-                    <img src="https://www.facebook.com/groups/1057300540985213/posts/26518693757752541/" alt="FB">
+                <a href="https://www.facebook.com/groups/1057300540985213/posts/26518693757752541/" target="_self" class="base-card base-1st">
+                    <img src="https://i.ibb.co/W4K1DWsJ/500px-2023-Facebook-icon-svg.webp" alt="FB">
                     <span>FB</span>
                 </a>
 
