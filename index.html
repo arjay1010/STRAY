@@ -268,31 +268,153 @@
         </div>
     </section>
 
-        <!-- 頁二：響應式壘包功能區塊 -->
+            /* --- 頁二：壘包功能區塊樣式（✨全新修正：純金黃色實線與完美菱形） --- */
+        .baseball-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100vh;
+            padding: 40px;
+        }
+        .field-wrapper {
+            position: relative;
+            width: 75vmin;  
+            height: 75vmin;
+            max-width: 550px;
+            max-height: 550px;
+        }
+        
+        /* 🏆 關鍵修改：虛線 (dashed) 改為金色實線 (solid) */
+        .diamond-lines {
+            position: absolute;
+            top: 15%;
+            left: 15%;
+            width: 70%;
+            height: 70%;
+            border: 2px solid rgba(212, 175, 55, 0.8); 
+            transform: rotate(45deg);
+            z-index: 1;
+        }
+        
+        .center-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            border: 2px solid #d4af37;
+            border-radius: 50%;
+            z-index: 2;
+            background: rgba(0, 0, 0, 0.6);
+            transition: 0.5s;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+        }
+        
+        /* 🏆 關鍵修改：壘包本身旋轉 45 度變成「菱形」，並修正內部文字排版 */
+        .base-card {
+            position: absolute;
+            width: 85px;
+            height: 85px;
+            background: #111;
+            border: 2px solid #d4af37;
+            border-radius: 8px; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 3;
+            text-decoration: none;
+            color: #fff;
+            
+            /* ✨ 讓外框旋轉 45 度變成完美的棒球壘包菱形 */
+            transform-origin: center;
+        }
+        
+        /* 懸停發光特效 */
+        .base-card:hover {
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.8);
+            background: #222;
+        }
+        .base-card:hover ~ .center-circle {
+            box-shadow: 0 0 25px #d4af37;
+            transform: translate(-50%, -50%) scale(1.2);
+        }
+        
+        /* ✨ 關鍵修改：因為外框轉了 45 度，裡面的圖片和文字要轉回來 (-45度)，字才不會跟著歪掉 */
+        .base-card img, .base-card span {
+            transform: rotate(-45deg);
+        }
+        
+        .base-card img {
+            width: 30px;
+            height: 30px;
+            margin-bottom: 2px;
+            object-fit: contain;
+        }
+        .base-card span {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #d4af37;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+        
+        /* 🏆 四個壘包的精準定位與基礎旋轉 45 度設定 */
+        .base-2nd { top: 0; left: 50%; transform: translateX(-50%) rotate(45deg); }                       
+        .base-2nd:hover { transform: translateX(-50%) rotate(45deg) scale(1.1); }
+        
+        .base-3rd { top: 50%; left: 0; transform: translateY(-50%) rotate(45deg); }                       
+        .base-3rd:hover { transform: translateY(-50%) rotate(45deg) scale(1.1); }
+        
+        .base-1st { top: 50%; right: 0; transform: translateY(-50%) rotate(45deg); }                      
+        .base-1st:hover { transform: translateY(-50%) rotate(45deg) scale(1.1); }
+        
+        .base-home { bottom: 0; left: 50%; transform: translateX(-50%) rotate(45deg); }                  
+        .base-home:hover { transform: translateX(-50%) rotate(45deg) scale(1.1); }
+    </style>
+</head>
+<body>
+
+    <!-- 右側替代滾動條：金色精緻圈圈導覽選單 -->
+    <div class="dot-navigation">
+        <div class="dot-item active" data-target="page1">
+            <span class="dot-label">📢 最新消息</span>
+            <div class="dot-circle"></div>
+        </div>
+        <div class="dot-item" data-target="page2">
+            <span class="dot-label">⚾ 壘包主控台</span>
+            <div class="dot-circle"></div>
+        </div>
+    </div>
+
+    <!-- 頁二：響應式壘包功能區塊 -->
     <section id="page2" class="page-section">
         <div class="baseball-container">
             <div class="field-wrapper">
                 <div class="diamond-lines"></div>
 
-                <!-- 二壘：Instagram 📌請把 href 改成您的功能網頁檔名 -->
+                <!-- 二壘：Instagram -->
                 <a href="https://instagram.com" target="_self" class="base-card base-2nd">
                     <img src="https://flaticon.com" alt="IG">
                     <span>IG</span>
                 </a>
 
-                <!-- 三壘：YouTube 📌請把 href 改成您的功能網頁檔名 -->
+                <!-- 三壘：YouTube -->
                 <a href="https://youtube.com" target="_self" class="base-card base-3rd">
                     <img src="https://flaticon.com" alt="YT">
                     <span>YT</span>
                 </a>
 
-                <!-- 一壘：Facebook 📌請把 href 改成您的功能網頁檔名 -->
+                <!-- 一壘：Facebook -->
                 <a href="https://facebook.com" target="_self" class="base-card base-1st">
                     <img src="https://flaticon.com" alt="FB">
                     <span>FB</span>
                 </a>
 
-                <!-- 本壘：首頁 📌點擊會直接平滑滾動回頂部的最新消息 -->
+                <!-- 本壘：首頁 -->
                 <a href="#page1" target="_self" class="base-card base-home" id="home-base-btn">
                     <img src="https://flaticon.com" alt="首頁">
                     <span>首頁</span>
@@ -358,11 +480,9 @@
             showSlide(currentSlide + direction);
         }
 
-        // 每 5 秒自動輪播
         setInterval(() => {
             changeSlide(1);
         }, 5000);
     </script>
 </body>
 </html>
-
