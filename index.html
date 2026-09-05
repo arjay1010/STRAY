@@ -102,47 +102,43 @@
             justify-content: center;
             background-size: cover;
             background-position: center;
+            text-decoration: none; /* 移除超連結底線 */
         }
         .carousel-slide.active {
             opacity: 1;
         }
+        
+        /* 讓按鈕容器定位在中間下方 */
         .carousel-caption {
             position: absolute;
-            bottom: 100px;
+            bottom: 50px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.75);
-            padding: 25px 45px;
-            border-radius: 10px;
-            text-align: center;
-            border-top: 3px solid #d4af37;
-            max-width: 80%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            z-index: 10;
         }
-        .carousel-caption h2 {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-            color: #d4af37;
-            letter-spacing: 1px;
+        /* 兩個按鈕水平並排 */
+        .carousel-controls-bottom {
+            display: flex;
+            gap: 20px;
         }
+        /* 左右按鈕的質感金色外觀 */
         .carousel-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6);
             color: #fff;
             border: 1px solid #d4af37;
-            font-size: 2rem;
-            padding: 10px 15px;
+            font-size: 1.5rem;
+            padding: 8px 20px;
             cursor: pointer;
-            z-index: 10;
             transition: 0.3s;
+            border-radius: 4px;
         }
-        .carousel-arrow:hover { background: #d4af37; color: #000; }
-        .arrow-left { left: 20px; }
-        .arrow-right { right: 20px; }
+        .carousel-arrow:hover { 
+            background: #d4af37; 
+            color: #000; 
+            box-shadow: 0 0 10px #d4af37;
+        }
 
-        /* --- 頁二：壘包功能區塊 --- */
+        /* --- 頁二：壘包功能區塊樣式 --- */
         .baseball-container {
             display: flex;
             justify-content: center;
@@ -247,51 +243,57 @@
     <!-- 頁一：全螢幕輪播圖區塊 -->
     <section id="page1" class="page-section">
         <div class="carousel-container">
-            <button class="carousel-arrow arrow-left" onclick="changeSlide(-1)">&#10094;</button>
-            <button class="carousel-arrow arrow-right" onclick="changeSlide(1)">&#10095;</button>
+            
+            <!-- 📌 第一張輪播圖 
+                 href 填入：點擊照片後要在「同分頁跳轉」的網頁（例如 news1.html）
+                 url 填入：您的照片網址（例如：https://... 或圖片檔名） -->
+            <a href="https://sites.google.com/view/straybaseball-team/%E6%9C%80%E6%96%B0%E6%B6%88%E6%81%AF-news?authuser=0" target="_self" class="carousel-slide active" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.3)), url('https://i.ibb.co/gMZXzdyJ/STRAY.png');"></a>
 
-            <div class="carousel-slide active" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://picsum.photos');">
-                <div class="carousel-caption">
-                    <h2>最新消息 ｜ 全球大賽正式開打</h2>
-                    <p>向下滾動或點擊右側金色圈圈進入壘包主控台！</p>
+            <!-- 📌 第二張輪播圖 
+                 href 填入：點擊照片後要在「同分頁跳轉」的網頁（例如 news2.html）
+                 url 填入：您的照片網址 -->
+            <a href="https://sites.google.com/view/straybaseball-team/%E6%88%B0%E5%8A%9B-players?authuser=0" target="_self" class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.3)), url('https://i.ibb.co/whgF68nv/9.png');"></a>
+
+            <!-- 📌 第三張輪播圖 -->
+            <a href="這裡改成第三張圖要跳轉的網頁.html" target="_self" class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.3)), url('https://picsum.photos');"></a>
+
+            <!-- 置中於底部的左右切換按鈕 -->
+            <div class="carousel-caption">
+                <div class="carousel-controls-bottom">
+                    <button class="carousel-arrow arrow-left" onclick="changeSlide(-1)">&#10094;</button>
+                    <button class="carousel-arrow arrow-right" onclick="changeSlide(1)">&#10095;</button>
                 </div>
             </div>
-
-            <div class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://picsum.photos');">
-                <div class="carousel-caption">
-                    <h2>年度盛典 ｜ 限定周邊商品開賣</h2>
-                    <p>追蹤我們的官方各社群平台獲取第一手限量抽獎資訊。</p>
-                </div>
-            </div>
+            
         </div>
     </section>
 
-    <!-- 頁二：修正後的響應式壘包功能區塊 -->
+    <!-- 頁二：響應式壘包功能區塊 -->
     <section id="page2" class="page-section">
         <div class="baseball-container">
             <div class="field-wrapper">
                 <div class="diamond-lines"></div>
 
-                <!-- 二壘：Instagram -->
-                <a href="https://instagram.com" target="_blank" class="base-card base-2nd">
+                <!-- 二壘：Instagram 📌請把 href 改成您的功能網頁檔名（如 app1.html） -->
+                <a href="https://instagram.com" target="_self" class="base-card base-2nd">
                     <img src="https://flaticon.com" alt="IG">
                     <span>IG</span>
                 </a>
 
-                <!-- 三壘：YouTube -->
-                <a href="https://youtube.com" target="_blank" class="base-card base-3rd">
+                <!-- 三壘：YouTube 📌請把 href 改成您的功能網頁檔名（如 app2.html） -->
+                <a href="https://youtube.com" target="_self" class="base-card base-3rd">
                     <img src="https://flaticon.com" alt="YT">
                     <span>YT</span>
                 </a>
 
-                <!-- 一壘：Facebook -->
-                <a href="https://facebook.com" target="_blank" class="base-card base-1st">
+                <!-- 一壘：Facebook 📌請把 href 改成您的功能網頁檔名（如 app3.html） -->
+                <a href="https://facebook.com" target="_self" class="base-card base-1st">
                     <img src="https://flaticon.com" alt="FB">
                     <span>FB</span>
                 </a>
 
-                <!-- 本壘：首頁 -->
-                <a href="#home" class="base-card base-home">
+                <!-- 本壘：首頁 📌點擊會直接平滑滾動回頂部的最新消息 -->
+                <a href="#page1" target="_self" class="base-card base-home" id="home-base-btn">
                     <img src="https://flaticon.com" alt="首頁">
                     <span>首頁</span>
                 </a>
@@ -299,16 +301,8 @@
                 <!-- 中央圈圈：投手丘 -->
                 <div class="center-circle"></div>
             </div>
----
-                <!-- 中央圈圈：投手丘 -->
-                <div class="center-circle"></div>
-            </div>
         </div>
     </section>
-
-    <script>
-        /* --- 1. 右側圈圈點擊：平滑滾動到該頁面 --- */
-        const dotItems = document.querySelectorAll('.dot-item');
 
     <script>
         /* --- 1. 右側圈圈點擊：平滑滾動到該頁面 --- */
@@ -321,6 +315,12 @@
                 
                 targetSection.scrollIntoView({ behavior: 'smooth' });
             });
+        });
+
+        /* --- 本壘按鈕：自動平滑滾動回第一頁 --- */
+        document.getElementById('home-base-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('page1').scrollIntoView({ behavior: 'smooth' });
         });
 
         /* --- 2. 智慧滾輪監聽：滾動時自動高亮對應的金色圈圈 --- */
@@ -358,10 +358,10 @@
             showSlide(currentSlide + direction);
         }
 
+        // 每 5 秒自動輪播
         setInterval(() => {
             changeSlide(1);
         }, 5000);
     </script>
 </body>
 </html>
-```
