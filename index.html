@@ -101,14 +101,14 @@
         }
 
 
-                              /* --- 頁一：最新消息圖片輪播（🏆手機不裁切＋全螢幕融為一體技術） --- */
+                                      /* --- 頁一：最新消息圖片輪播（🏆毛玻璃霧化背景 RWD 技術） --- */
         .page1-carousel-section {
             background-color: #000;
         }
         .carousel-container {
             position: relative;
             width: 100%;
-            height: 100vh; /* 無論任何裝置，死死霸佔 100% 全螢幕高度 */
+            height: 100vh; /* 死死鎖定全螢幕一整頁，不與頁二擠在一起 */
             overflow: hidden;
             display: flex;
             align-items: center;
@@ -131,13 +131,29 @@
             z-index: 1;
         }
         
-        /* 電腦版維持完美填滿（稍微裁切邊緣以達到震撼的無黑邊滿版視覺） */
-        .carousel-slide img {
+        /* 🏆 背景那張圖：強制放大到 110% 鋪滿整個全螢幕，並套用嚴重的霧化模糊 */
+        .carousel-slide img.bg-blur {
+            position: absolute;
+            top: -5%;
+            left: -5%;
+            width: 110%;
+            height: 110%;
+            object-fit: cover;
+            /* 調整 px 可以改變模糊程度，數值越大越朦朧，並加上暗色遮罩讓背景更有質感 */
+            filter: blur(15px) brightness(0.6); 
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        /* 🏆 前景那張圖：在電腦版上等比例滿版 */
+        .carousel-slide img.main-img {
+            position: relative;
             width: 100%;
             height: 100%;
-            object-fit: cover; 
+            object-fit: cover; /* 電腦寬螢幕維持震撼的填滿視覺 */
             object-position: center;
             display: block;
+            z-index: 2;
         }
         
         /* 底部控制按鈕容器定位 */
@@ -168,35 +184,25 @@
             box-shadow: 0 0 10px #d4af37;
         }
 
-        /* 📱 專屬手機版黑科技優化：完美不裁切文字，且畫面上下一體化無黑邊 */
+        /* 📱 專屬手機版 RWD 覆寫：觸發不裁切，改由同色霧化背景補滿上下缺塊 */
         @media (max-width: 768px) {
             .carousel-container {
-                height: 100vh !important; /* 保持全螢幕一整頁，不跟頁二擠在一起 */
-                background-color: #fff !important; /* 🏆 核心修改：將手機背景強制換成「純白色」與您的海報完美融合 */
+                height: 100vh !important; /* 手機版也是死死霸佔一整頁 */
             }
-            .carousel-slide {
-                background-color: #fff !important; /* 確保輪播底色也是純白 */
-            }
-            .carousel-slide img {
+            .carousel-slide img.main-img {
                 width: 100%;
                 height: auto;
-                object-fit: contain; /* 🏆 核心修改：圖片等比例縮放，確保所有字體 100% 完整顯示，絕不裁切 */
-                max-height: 100%;
+                object-fit: contain; /* 🏆 核心修改：手機上等比例縮放，確保文字 100% 完整顯示，絕對不裁切 */
+                max-height: 85vh; /* 留下一點點下方空間給換頁按鈕 */
             }
             .carousel-caption {
-                bottom: 40px; /* 控制按鈕留在最下方的白色區塊，精緻且好點擊 */
+                bottom: 40px;
             }
             .carousel-arrow {
-                background: rgba(0, 0, 0, 0.8); /* 在白底上換成深色深色按鈕，確保看得到 */
                 font-size: 1.1rem;
                 padding: 4px 14px;
             }
         }
-
-
-
-
-
 
         /* --- 頁二：壘包功能區塊樣式（🏆終極幾何修正版：完美菱形與絕對置中） --- */
         .baseball-container {
@@ -308,25 +314,28 @@
         </div>
     </div>
 
-      <!-- 頁一：全螢幕輪播圖區塊（✨全新升級：改用 img 標籤搭配黑科技適配，根除黑邊與手機空白） -->
+         <!-- 頁一：全螢幕輪播圖區塊（🏆毛玻璃霧化背景黑科技：手機電腦完美不裁切） -->
     <section id="page1" class="page-section page1-carousel-section">
         <div class="carousel-container">
             
             <!-- 📌 第一張最新消息 
-                 href 修改點擊跳轉網址
-                 src 修改為您的照片路徑（目前放您的棒球海報當範例網址） -->
+                 注意：裡面的兩張 img 請都換成「一模一樣的圖片路徑」
+                 href 修改點擊跳轉網址 -->
             <a href="這裡改成第一張圖要跳轉的網頁.html" target="_self" class="carousel-slide active">
-                <img src="https://i.ibb.co/ZpJ98rX8/STRAY2026.png" alt="最新消息1">
+                <img src="https://i.ibb.co/ZpJ98rX8/STRAY2026.png" class="bg-blur" alt="背景模糊">
+                <img src="https://i.ibb.co/ZpJ98rX8/STRAY2026.png" class="main-img" alt="主體不裁切">
             </a>
 
             <!-- 📌 第二張最新消息 -->
             <a href="這裡改成第二張圖要跳轉的網頁.html" target="_self" class="carousel-slide">
-                <img src="https://i.ibb.co/whgF68nv/9.png" alt="最新消息2">
+                <img src="https://i.ibb.co/whgF68nv/9.png" class="bg-blur" alt="背景模糊">
+                <img src="https://i.ibb.co/whgF68nv/9.png" class="main-img" alt="主體不裁切">
             </a>
 
             <!-- 📌 第三張最新消息 -->
             <a href="這裡改成第三張圖要跳轉的網頁.html" target="_self" class="carousel-slide">
-                <img src="https://i.ibb.co/DfST7yL3/2.png" alt="最新消息3">
+                <img src="https://i.ibb.co/DfST7yL3/2.png" class="bg-blur" alt="背景模糊">
+                <img src="https://i.ibb.co/DfST7yL3/2.png" class="main-img" alt="主體不裁切">
             </a>
 
             <!-- 置中於底部的左右切換按鈕 -->
@@ -339,6 +348,7 @@
             
         </div>
     </section>
+
 
     <!-- 頁二：響應式壘包功能區塊 -->
     <section id="page2" class="page-section">
