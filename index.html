@@ -102,13 +102,12 @@
             justify-content: center;
             background-size: cover;
             background-position: center;
-            text-decoration: none; /* 移除超連結底線 */
+            text-decoration: none;
         }
         .carousel-slide.active {
             opacity: 1;
         }
         
-        /* 讓按鈕容器定位在中間下方 */
         .carousel-caption {
             position: absolute;
             bottom: 50px;
@@ -116,12 +115,10 @@
             transform: translateX(-50%);
             z-index: 10;
         }
-        /* 兩個按鈕水平並排 */
         .carousel-controls-bottom {
             display: flex;
             gap: 20px;
         }
-        /* 左右按鈕的質感金色外觀 */
         .carousel-arrow {
             background: rgba(0, 0, 0, 0.6);
             color: #fff;
@@ -138,7 +135,7 @@
             box-shadow: 0 0 10px #d4af37;
         }
 
-               /* --- 頁二：壘包功能區塊樣式（🏆終極幾何修正版：完美菱形與絕對置中） --- */
+        /* --- 頁二：壘包功能區塊樣式（🏆終極幾何修正版：完美菱形與絕對置中） --- */
         .baseball-container {
             display: flex;
             justify-content: center;
@@ -148,8 +145,6 @@
             padding: 40px;
             position: relative;
         }
-        
-        /* 鎖定球場最外圍容器尺寸，絕不縮小或變形 */
         .field-wrapper {
             position: relative;
             width: 75vmin;  
@@ -157,8 +152,6 @@
             max-width: 550px;
             max-height: 550px;
         }
-        
-        /* 繪製完美金黃色實線內野 */
         .diamond-lines {
             position: absolute;
             top: 15%;
@@ -169,8 +162,6 @@
             transform: rotate(45deg);
             z-index: 1;
         }
-        
-        /* 投手丘中央圈圈定位 */
         .center-circle {
             position: absolute;
             top: 50%;
@@ -185,8 +176,6 @@
             transition: 0.5s;
             box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
         }
-        
-        /* 🏆 壘包按鈕：維持標準正方形，並利用 rotate(45deg) 轉成完美菱形 */
         .base-card {
             position: absolute;
             width: 85px;
@@ -202,19 +191,15 @@
             text-decoration: none;
             color: #fff;
         }
-        
-        /* 🏆 內容包裹容器：用來把圖片和文字轉回來 (-45deg)，並用 Flexbox 強制水平垂直絕對置中 */
         .base-content-inner {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transform: rotate(-45deg); /* 反向旋轉，字才不會跟著歪斜 */
+            transform: rotate(-45deg);
             width: 100%;
             height: 100%;
         }
-        
-        /* 強制限定圖標的最大寬高，絕不允許集體爆開破圖 */
         .base-content-inner img {
             width: 28px;
             height: 28px;
@@ -222,7 +207,6 @@
             object-fit: contain;
             display: block;
         }
-        
         .base-content-inner span {
             font-size: 0.75rem;
             font-weight: bold;
@@ -233,27 +217,18 @@
             display: block;
             width: 100%;
         }
-        
-        /* 🏆 四個壘包在球場邊角的精密定位與基礎 45 度旋轉（完美融入動畫與排版） */
         .base-2nd { top: 0; left: 50%; transform: translateX(-50%) rotate(45deg); }                       
         .base-2nd:hover { transform: translateX(-50%) rotate(45deg) scale(1.1); box-shadow: 0 0 20px rgba(212, 175, 55, 0.8); background: #222; }
-        
         .base-3rd { top: 50%; left: 0; transform: translateY(-50%) rotate(45deg); }                       
         .base-3rd:hover { transform: translateY(-50%) rotate(45deg) scale(1.1); box-shadow: 0 0 20px rgba(212, 175, 55, 0.8); background: #222; }
-        
         .base-1st { top: 50%; right: 0; transform: translateY(-50%) rotate(45deg); }                      
         .base-1st:hover { transform: translateY(-50%) rotate(45deg) scale(1.1); box-shadow: 0 0 20px rgba(212, 175, 55, 0.8); background: #222; }
-        
         .base-home { bottom: 0; left: 50%; transform: translateX(-50%) rotate(45deg); }                  
         .base-home:hover { transform: translateX(-50%) rotate(45deg) scale(1.1); box-shadow: 0 0 20px rgba(212, 175, 55, 0.8); background: #222; }
-        
-        /* 當滑鼠懸停在任一按鈕上時，中央圓圈的共振發光特效 */
         .base-card:hover ~ .center-circle {
             box-shadow: 0 0 25px #d4af37;
             transform: translate(-50%, -50%) scale(1.2);
         }
-
-
     </style>
 </head>
 <body>
@@ -273,42 +248,25 @@
     <!-- 頁一：全螢幕輪播圖區塊 -->
     <section id="page1" class="page-section">
         <div class="carousel-container">
-            
-            <!-- 📌 第一張輪播圖 
-                 href 填入：點擊照片後要在「同分頁跳轉」的網頁（例如 news1.html）
-                 url 填入：您的照片網址（例如：https://... 或圖片檔名） -->
-            <a href="https://sites.google.com/view/straybaseball-team/%E6%9C%80%E6%96%B0%E6%B6%88%E6%81%AF-news?authuser=0" target="_self" class="carousel-slide active" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.3)), url('https://i.ibb.co/gMZXzdyJ/STRAY.png');"></a>
+            <a href="這裡改成第一張圖要跳轉的網頁.html" target="_self" class="carousel-slide active" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.3)), url('https://picsum.photos');"></a>
+            <a href="這裡改成第二張圖要跳轉的網頁.html" target="_self" class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.3)), url('https://picsum.photos');"></a>
+            <a href="這裡改成第三張圖要跳轉的網頁.html" target="_self" class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.3)), url('https://picsum.photos');"></a>
 
-            <!-- 📌 第二張輪播圖 
-                 href 填入：點擊照片後要在「同分頁跳轉」的網頁（例如 news2.html）
-                 url 填入：您的照片網址 -->
-            <a href="https://sites.google.com/view/straybaseball-team/%E6%88%B0%E5%8A%9B-players?authuser=0" target="_self" class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.3)), url('https://i.ibb.co/whgF68nv/9.png');"></a>
-
-            <!-- 📌 第三張輪播圖 -->
-            <a href="https://sites.google.com/view/straybaseball-team/%E9%97%9C%E6%96%BC%E6%88%91%E5%80%91-stray?authuser=0" target="_self" class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.3)), url('https://i.ibb.co/ZpJ98rX8/STRAY2026.png');"></a>
-
-            <!-- 置中於底部的左右切換按鈕 -->
             <div class="carousel-caption">
                 <div class="carousel-controls-bottom">
                     <button class="carousel-arrow arrow-left" onclick="changeSlide(-1)">&#10094;</button>
                     <button class="carousel-arrow arrow-right" onclick="changeSlide(1)">&#10095;</button>
                 </div>
             </div>
-            
         </div>
     </section>
-</style>
-<style>
-
-                    <!-- 頁二：響應式壘包功能區塊 -->
+    <!-- 頁二：響應式壘包功能區塊 -->
     <section id="page2" class="page-section">
         <div class="baseball-container">
             <div class="field-wrapper">
-                
-                <!-- 這是連接四個壘包的金黃色實線 -->
                 <div class="diamond-lines"></div>
 
-                <!-- 二壘：Instagram（已改為開啟新分頁） -->
+                <!-- 二壘：Instagram -->
                 <a href="https://instagram.com" target="_blank" class="base-card base-2nd">
                     <div class="base-content-inner">
                         <img src="https://flaticon.com" alt="IG">
@@ -316,15 +274,14 @@
                     </div>
                 </a>
 
-                <!-- 三壘：YouTube（已改為開啟新分頁） -->
+                <!-- 三壘：YouTube -->
                 <a href="https://youtube.com" target="_blank" class="base-card base-3rd">
                     <div class="base-content-inner">
                         <img src="https://flaticon.com" alt="YT">
-                        <span>YT</span>
                     </div>
                 </a>
 
-                <!-- 一壘：Facebook（已改為開啟新分頁） -->
+                <!-- 一壘：Facebook -->
                 <a href="https://facebook.com" target="_blank" class="base-card base-1st">
                     <div class="base-content-inner">
                         <img src="https://flaticon.com" alt="FB">
@@ -332,7 +289,7 @@
                     </div>
                 </a>
 
-                <!-- 本壘：首頁（維持在原分頁平滑滾動回頂部） -->
+                <!-- 本壘：首頁 -->
                 <a href="#page1" target="_self" class="base-card base-home" id="home-base-btn">
                     <div class="base-content-inner">
                         <img src="https://flaticon.com" alt="首頁">
@@ -340,22 +297,18 @@
                     </div>
                 </a>
 
-                <!-- 中央圈圈：投手丘 -->
                 <div class="center-circle"></div>
             </div>
         </div>
     </section>
 
-    <!-- ===== 核心動態 JavaScript 控制邏輯區區 ===== -->
     <script>
         /* --- 1. 右側圈圈點擊：平滑滾動到該頁面 --- */
         const dotItems = document.querySelectorAll('.dot-item');
-        
         dotItems.forEach(item => {
             item.addEventListener('click', function() {
                 const targetId = this.getAttribute('data-target');
                 const targetSection = document.getElementById(targetId);
-                
                 targetSection.scrollIntoView({ behavior: 'smooth' });
             });
         });
@@ -368,17 +321,14 @@
 
         /* --- 2. 智慧滾輪監聽：滾動時自動高亮對應的金色圈圈 --- */
         const sections = document.querySelectorAll('.page-section');
-        
         window.addEventListener('scroll', () => {
             let currentActiveSectionId = "";
-            
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
                 if (window.pageYOffset >= sectionTop - window.innerHeight / 2) {
                     currentActiveSectionId = section.getAttribute('id');
                 }
             });
-
             dotItems.forEach(item => {
                 item.classList.remove('active');
                 if (item.getAttribute('data-target') === currentActiveSectionId) {
@@ -390,22 +340,15 @@
         /* --- 3. 全螢幕最新消息自動輪播邏輯 --- */
         let currentSlide = 0;
         const slides = document.querySelectorAll('.carousel-slide');
-
         function showSlide(index) {
             slides[currentSlide].classList.remove('active');
             currentSlide = (index + slides.length) % slides.length;
             slides[currentSlide].classList.add('active');
         }
-
         function changeSlide(direction) {
             showSlide(currentSlide + direction);
         }
-
-        // 每 5 秒自動輪播
-        setInterval(() => {
-            changeSlide(1);
-        }, 5000);
+        setInterval(() => { changeSlide(1); }, 5000);
     </script>
 </body>
 </html>
-
