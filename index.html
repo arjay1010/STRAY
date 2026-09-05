@@ -82,13 +82,15 @@
             position: relative;
         }
 
-                /* --- 頁一：最新消息圖片輪播（🏆全新比例優化：電腦手機完美適配） --- */
+        /* --- 頁一：最新消息圖片輪播（🏆 object-fit 智慧滿版技術） --- */
+        .page1-carousel-section {
+            background-color: #000;
+        }
         .carousel-container {
             position: relative;
             width: 100%;
-            height: 100vh; /* 電腦版預設滿版 */
+            height: 100vh; /* 電腦版維持完美全螢幕 */
             overflow: hidden;
-            background-color: #000;
         }
         .carousel-slide {
             position: absolute;
@@ -101,37 +103,38 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            
-            /* 🏆 核心修改：利用 contain 確保整張照片完整顯示，絕不被裁切 */
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            text-decoration: none;
         }
         .carousel-slide.active {
             opacity: 1;
+            z-index: 1;
         }
         
-        /* 讓左右按鈕容器定位在中間下方 */
+        /* 🏆 關鍵核心：強迫圖片在電腦版滿版填充，並在手機版自動還原尺寸 */
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 電腦版強制切去兩側黑邊，完美占滿螢幕 */
+            display: block;
+        }
+        
+        /* 底部控制箭頭容器 */
         .carousel-caption {
             position: absolute;
-            bottom: 40px;
+            bottom: 50px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 10;
         }
-        /* 兩個按鈕水平並排 */
         .carousel-controls-bottom {
             display: flex;
             gap: 20px;
         }
-        /* 左右按鈕的質感金色外觀 */
         .carousel-arrow {
             background: rgba(0, 0, 0, 0.7);
             color: #fff;
             border: 1px solid #d4af37;
-            font-size: 1.3rem;
-            padding: 6px 18px;
+            font-size: 1.5rem;
+            padding: 8px 22px;
             cursor: pointer;
             transition: 0.3s;
             border-radius: 4px;
@@ -142,20 +145,37 @@
             box-shadow: 0 0 10px #d4af37;
         }
 
-        /* 📱 關鍵 RWD 響應式優化：當螢幕寬度小於 768px（手機板）時自動切換比例 */
+        /* 📱 完美的手機版（RWD）無縫貼合設定 */
         @media (max-width: 768px) {
+            /* 🏆 關鍵修正：手機版不強制全螢幕，改由圖片的高度「自動撐開網頁」 */
             .carousel-container {
-                height: 56.25vw; /* 🏆 核心修改：強制鎖定 16:9 黃金比例，讓手機上看也絕不變形 */
-                margin-top: 20px; /* 與頂部留下一點質感微距 */
+                height: auto; 
+                position: relative;
+            }
+            .carousel-slide {
+                position: relative; /* 手機直向排列，藉此釋放位置高度 */
+                display: none;
+                width: 100%;
+                height: auto;
+            }
+            .carousel-slide.active {
+                display: block;
+            }
+            /* 🏆 關鍵修正：手機看時圖片完全不裁切、不放大，高度死死貼齊圖片底邊，絕不留空白 */
+            .carousel-slide img {
+                height: auto;
+                object-fit: contain; 
             }
             .carousel-caption {
-                bottom: 10px; /* 手機版按鈕往下一點，避免擋到最新消息畫面 */
+                position: absolute;
+                bottom: 20px; /* 控制箭頭留在手機圖片內部的最底端 */
             }
             .carousel-arrow {
-                font-size: 1rem;
-                padding: 4px 12px;
+                font-size: 1.1rem;
+                padding: 4px 14px;
             }
         }
+
 
 
         /* --- 頁二：壘包功能區塊樣式（🏆終極幾何修正版：完美菱形與絕對置中） --- */
@@ -268,21 +288,38 @@
         </div>
     </div>
 
-    <!-- 頁一：全螢幕輪播圖區塊 -->
-    <section id="page1" class="page-section">
+      <!-- 頁一：全螢幕輪播圖區塊（✨全新升級：改用 img 標籤搭配黑科技適配，根除黑邊與手機空白） -->
+    <section id="page1" class="page-section page1-carousel-section">
         <div class="carousel-container">
-            <a href="https://sites.google.com/view/straybaseball-team/%E6%AF%94%E8%B3%BD-games?authuser=0" target="_self" class="carousel-slide active" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.3)), url('https://i.ibb.co/DfST7yL3/2.png');"></a>
-            <a href="https://sites.google.com/view/straybaseball-team/%E9%97%9C%E6%96%BC%E6%88%91%E5%80%91-stray?authuser=0" target="_self" class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.3)), url('https://i.ibb.co/ZpJ98rX8/STRAY2026.png');"></a>
-            <a href="https://sites.google.com/view/straybaseball-team/%E6%9C%80%E6%96%B0%E6%B6%88%E6%81%AF-news?authuser=0" target="_self" class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.3)), url('https://i.ibb.co/whgF68nv/9.png');"></a>
+            
+            <!-- 📌 第一張最新消息 
+                 href 修改點擊跳轉網址
+                 src 修改為您的照片路徑（目前放您的棒球海報當範例網址） -->
+            <a href="這裡改成第一張圖要跳轉的網頁.html" target="_self" class="carousel-slide active">
+                <img src="https://i.ibb.co/ZpJ98rX8/STRAY2026.png" alt="最新消息1">
+            </a>
 
+            <!-- 📌 第二張最新消息 -->
+            <a href="這裡改成第二張圖要跳轉的網頁.html" target="_self" class="carousel-slide">
+                <img src="https://i.ibb.co/whgF68nv/9.png" alt="最新消息2">
+            </a>
+
+            <!-- 📌 第三張最新消息 -->
+            <a href="這裡改成第三張圖要跳轉的網頁.html" target="_self" class="carousel-slide">
+                <img src="https://i.ibb.co/DfST7yL3/2.png" alt="最新消息3">
+            </a>
+
+            <!-- 置中於底部的左右切換按鈕 -->
             <div class="carousel-caption">
                 <div class="carousel-controls-bottom">
                     <button class="carousel-arrow arrow-left" onclick="changeSlide(-1)">&#10094;</button>
                     <button class="carousel-arrow arrow-right" onclick="changeSlide(1)">&#10095;</button>
                 </div>
             </div>
+            
         </div>
     </section>
+
     <!-- 頁二：響應式壘包功能區塊 -->
     <section id="page2" class="page-section">
         <div class="baseball-container">
