@@ -138,7 +138,7 @@
             box-shadow: 0 0 10px #d4af37;
         }
 
-        /* --- 頁二：壘包功能區塊樣式 --- */
+               /* --- 頁二：壘包功能區塊樣式（🏆終極幾何修正版：完美菱形與絕對置中） --- */
         .baseball-container {
             display: flex;
             justify-content: center;
@@ -146,7 +146,10 @@
             width: 100%;
             height: 100vh;
             padding: 40px;
+            position: relative;
         }
+        
+        /* 鎖定球場最外圍容器尺寸，絕不縮小或變形 */
         .field-wrapper {
             position: relative;
             width: 75vmin;  
@@ -154,16 +157,20 @@
             max-width: 550px;
             max-height: 550px;
         }
+        
+        /* 繪製完美金黃色實線內野 */
         .diamond-lines {
             position: absolute;
             top: 15%;
             left: 15%;
             width: 70%;
             height: 70%;
-            border: 2px dashed rgba(212, 175, 55, 0.4); 
+            border: 2px solid rgba(212, 175, 55, 0.8); 
             transform: rotate(45deg);
             z-index: 1;
         }
+        
+        /* 投手丘中央圈圈定位 */
         .center-circle {
             position: absolute;
             top: 50%;
@@ -178,7 +185,8 @@
             transition: 0.5s;
             box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
         }
-                       /* 🏆 關鍵修正：確保菱形外框維持正圓心旋轉 */
+        
+        /* 🏆 壘包按鈕：維持標準正方形，並利用 rotate(45deg) 轉成完美菱形 */
         .base-card {
             position: absolute;
             width: 85px;
@@ -193,30 +201,20 @@
             z-index: 3;
             text-decoration: none;
             color: #fff;
-            transform-origin: center;
         }
         
-        /* 懸停發光特效 */
-        .base-card:hover {
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.8);
-            background: #222;
-        }
-        .base-card:hover ~ .center-circle {
-            box-shadow: 0 0 25px #d4af37;
-            transform: translate(-50%, -50%) scale(1.2);
-        }
-        
-        /* 🏆 核心修正：新增一個包覆容器，讓圖標與文字綁在一起整體旋轉 45 度，徹底解決跑版 */
+        /* 🏆 內容包裹容器：用來把圖片和文字轉回來 (-45deg)，並用 Flexbox 強制水平垂直絕對置中 */
         .base-content-inner {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transform: rotate(-45deg); /* 整體完美反轉 45 度 */
+            transform: rotate(-45deg); /* 反向旋轉，字才不會跟著歪斜 */
             width: 100%;
             height: 100%;
         }
         
+        /* 強制限定圖標的最大寬高，絕不允許集體爆開破圖 */
         .base-content-inner img {
             width: 28px;
             height: 28px;
@@ -233,20 +231,28 @@
             white-space: nowrap;
             text-align: center;
             display: block;
+            width: 100%;
         }
         
-        /* 四個壘包定位與基礎旋轉設定 */
+        /* 🏆 四個壘包在球場邊角的精密定位與基礎 45 度旋轉（完美融入動畫與排版） */
         .base-2nd { top: 0; left: 50%; transform: translateX(-50%) rotate(45deg); }                       
-        .base-2nd:hover { transform: translateX(-50%) rotate(45deg) scale(1.1); }
+        .base-2nd:hover { transform: translateX(-50%) rotate(45deg) scale(1.1); box-shadow: 0 0 20px rgba(212, 175, 55, 0.8); background: #222; }
         
         .base-3rd { top: 50%; left: 0; transform: translateY(-50%) rotate(45deg); }                       
-        .base-3rd:hover { transform: translateY(-50%) rotate(45deg) scale(1.1); }
+        .base-3rd:hover { transform: translateY(-50%) rotate(45deg) scale(1.1); box-shadow: 0 0 20px rgba(212, 175, 55, 0.8); background: #222; }
         
         .base-1st { top: 50%; right: 0; transform: translateY(-50%) rotate(45deg); }                      
-        .base-1st:hover { transform: translateY(-50%) rotate(45deg) scale(1.1); }
+        .base-1st:hover { transform: translateY(-50%) rotate(45deg) scale(1.1); box-shadow: 0 0 20px rgba(212, 175, 55, 0.8); background: #222; }
         
         .base-home { bottom: 0; left: 50%; transform: translateX(-50%) rotate(45deg); }                  
-        .base-home:hover { transform: translateX(-50%) rotate(45deg) scale(1.1); }
+        .base-home:hover { transform: translateX(-50%) rotate(45deg) scale(1.1); box-shadow: 0 0 20px rgba(212, 175, 55, 0.8); background: #222; }
+        
+        /* 當滑鼠懸停在任一按鈕上時，中央圓圈的共振發光特效 */
+        .base-card:hover ~ .center-circle {
+            box-shadow: 0 0 25px #d4af37;
+            transform: translate(-50%, -50%) scale(1.2);
+        }
+
 
     </style>
 </head>
