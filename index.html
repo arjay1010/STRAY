@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>整合控制台 - 最新消息與壘包導覽</title>
+    <title>高質感金色導覽控制台</title>
     <style>
         /* --- 全域重設 --- */
         * {
@@ -15,48 +15,84 @@
             width: 100%;
             height: 100%;
             font-family: "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
-            background-color: #000; /* 配合您圖片的黑底風格 */
+            background-color: #000;
             color: #fff;
-            overflow-x: hidden;
+            /* 🏆 關鍵：隱藏全網頁右側的傳統外觀滾動條 */
+            scrollbar-width: none; /* Firefox */
+        }
+        /* Chrome, Safari, Opera 隱藏滾動條 */
+        body::-webkit-scrollbar {
+            display: none;
         }
 
-        /* --- 主導覽按鈕 (上方切換頁面用) --- */
-        .page-switcher {
+        /* --- 🏆 右側高質感金色圈圈導覽列 --- */
+        .dot-navigation {
             position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
             z-index: 1000;
             display: flex;
-            gap: 15px;
-            background: rgba(0, 0, 0, 0.6);
-            padding: 10px 20px;
-            border-radius: 30px;
-            border: 1px solid #d4af37; /* 金色邊框 */
-        }
-        .page-btn {
-            background: none;
-            border: none;
-            color: #aaa;
-            padding: 8px 16px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: 0.3s;
-            font-weight: bold;
-        }
-        .page-btn.active, .page-btn:hover {
-            color: #d4af37;
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+            flex-direction: column;
+            gap: 25px;
+            align-items: flex-end;
         }
 
-        /* --- 分頁顯示控制 --- */
-        .page-section {
-            display: none;
-            width: 100%;
-            min-height: 100vh;
+        /* 單個圈圈項目包裹器 */
+        .dot-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            position: relative;
         }
-        .page-section.active {
-            display: block;
+
+        /* 圈圈內顯現的文字（質感精緻感來源） */
+        .dot-label {
+            color: #d4af37;
+            font-size: 0.85rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            opacity: 0; /* 預設隱藏 */
+            transform: translateX(10px);
+            transition: all 0.4s ease;
+            white-space: nowrap;
+            pointer-events: none;
+            text-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
+        }
+
+        /* 金色圈圈本體 */
+        .dot-circle {
+            width: 12px;
+            height: 12px;
+            border: 2px solid #d4af37;
+            border-radius: 50%;
+            background: transparent;
+            transition: all 0.4s ease;
+            box-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
+        }
+
+        /* 當該頁面被激活 (Active) 或 滑鼠懸停 (Hover) 時的華麗特效 */
+        .dot-item.active .dot-circle,
+        .dot-item:hover .dot-circle {
+            background: #d4af37;
+            transform: scale(1.3);
+            box-shadow: 0 0 15px #d4af37, 0 0 25px rgba(212, 175, 55, 0.6);
+        }
+
+        /* 激活或懸停時，同步向左滑出高質感文字 */
+        .dot-item.active .dot-label,
+        .dot-item:hover .dot-label {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+
+        /* --- 網頁段落區塊設定 (改成滾輪上下滑動流暢模式) --- */
+        .page-section {
+            width: 100%;
+            height: 100vh; /* 每一頁都是全螢幕 */
+            position: relative;
         }
 
         /* ==========================================
@@ -85,25 +121,25 @@
         .carousel-slide.active {
             opacity: 1;
         }
-        /* 輪播文字遮罩遮罩 */
         .carousel-caption {
             position: absolute;
-            bottom: 80px;
+            bottom: 100px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.7);
-            padding: 20px 40px;
+            background: rgba(0, 0, 0, 0.75);
+            padding: 25px 45px;
             border-radius: 10px;
             text-align: center;
             border-top: 3px solid #d4af37;
             max-width: 80%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
         .carousel-caption h2 {
             font-size: 1.8rem;
             margin-bottom: 10px;
             color: #d4af37;
+            letter-spacing: 1px;
         }
-        /* 左右切換箭頭 */
         .carousel-arrow {
             position: absolute;
             top: 50%;
@@ -131,30 +167,24 @@
             width: 100%;
             height: 100vh;
             padding: 40px;
-            box-sizing: border-box;
         }
-        /* 響應式等比例正方形外盒 */
         .field-wrapper {
             position: relative;
-            width: 80vmin;  /* 根據螢幕長寬最小者自動縮放，確保永遠是完美正方形 */
-            height: 80vmin;
-            max-width: 600px;
-            max-height: 600px;
+            width: 75vmin;  
+            height: 75vmin;
+            max-width: 550px;
+            max-height: 550px;
         }
-
-        /* 繪製內野連接線 (正方形旋轉 45 度變成菱形球場) */
         .diamond-lines {
             position: absolute;
             top: 15%;
             left: 15%;
             width: 70%;
             height: 70%;
-            border: 2px dashed rgba(212, 175, 55, 0.4); /* 金色虛線線條 */
+            border: 2px dashed rgba(212, 175, 55, 0.4); 
             transform: rotate(45deg);
             z-index: 1;
         }
-
-        /* 中央圈圈 (原位移修正，精準置中於投手丘) */
         .center-circle {
             position: absolute;
             top: 50%;
@@ -169,15 +199,13 @@
             transition: 0.5s;
             box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
         }
-
-        /* 壘包按鈕通用樣式 */
         .base-card {
             position: absolute;
             width: 85px;
             height: 85px;
             background: #111;
             border: 2px solid #d4af37;
-            border-radius: 8px; /* 微微圓角 */
+            border-radius: 8px; 
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -188,7 +216,6 @@
             text-decoration: none;
             color: #fff;
         }
-        /* 懸停動畫：放大並發光，同時讓中央圈圈共振 */
         .base-card:hover {
             transform: scale(1.1);
             box-shadow: 0 0 20px rgba(212, 175, 55, 0.8);
@@ -198,8 +225,6 @@
             box-shadow: 0 0 25px #d4af37;
             transform: translate(-50%, -50%) scale(1.2);
         }
-
-        /* 壘包圖標與文字 */
         .base-card img {
             width: 32px;
             height: 32px;
@@ -212,51 +237,50 @@
             color: #d4af37;
             letter-spacing: 1px;
         }
-
-        /* 四個壘包的精準絕對定位 (修正歪斜，形成完美正方形/菱形) */
-        .base-2nd { top: 0; left: 50%; transform: translateX(-50%); }                       /* 二壘：正上方 (IG) */
+        .base-2nd { top: 0; left: 50%; transform: translateX(-50%); }                       
         .base-2nd:hover { transform: translateX(-50%) scale(1.1); }
-
-        .base-3rd { top: 50%; left: 0; transform: translateY(-50%); }                       /* 三壘：正左方 (YT) */
+        .base-3rd { top: 50%; left: 0; transform: translateY(-50%); }                       
         .base-3rd:hover { transform: translateY(-50%) scale(1.1); }
-
-        .base-1st { top: 50%; right: 0; transform: translateY(-50%); }                      /* 一壘：正右方 (FB) */
+        .base-1st { top: 50%; right: 0; transform: translateY(-50%); }                      
         .base-1st:hover { transform: translateY(-50%) scale(1.1); }
-
-        .base-home { bottom: 0; left: 50%; transform: translateX(-50%); }                  /* 本壘：正下方 (首頁) */
+        .base-home { bottom: 0; left: 50%; transform: translateX(-50%); }                  
         .base-home:hover { transform: translateX(-50%) scale(1.1); }
-
     </style>
 </head>
 <body>
 
-    <!-- 頂部頁面切換控制列 -->
-    <div class="page-switcher">
-        <button class="page-btn active" onclick="switchPage('page1')">📢 最新消息</button>
-        <button class="page-btn" onclick="switchPage('page2')">⚾ 壘包主控台</button>
+    <!-- 🏆 右側替代滾動條：金色精緻圈圈導覽選單 -->
+    <div class="dot-navigation">
+        <!-- 點擊圈圈會平滑滾動到指定的 section，文字在 active 或 hover 時才側向滑出 -->
+        <div class="dot-item active" data-target="page1">
+            <span class="dot-label">📢 最新消息</span>
+            <div class="dot-circle"></div>
+        </div>
+        <div class="dot-item" data-target="page2">
+            <span class="dot-label">⚾ 壘包主控台</span>
+            <div class="dot-circle"></div>
+        </div>
     </div>
 
     <!-- ==========================================
        頁一：全螢幕輪播圖區塊
        ========================================== -->
-    <section id="page1" class="page-section active">
+    <section id="page1" class="page-section">
         <div class="carousel-container">
             <button class="carousel-arrow arrow-left" onclick="changeSlide(-1)">&#10094;</button>
             <button class="carousel-arrow arrow-right" onclick="changeSlide(1)">&#10095;</button>
 
-            <!-- 輪播圖片一 (請替換為您的最新消息圖片網址) -->
             <div class="carousel-slide active" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://picsum.photos');">
                 <div class="carousel-caption">
                     <h2>最新消息 ｜ 全球大賽正式開打</h2>
-                    <p>立即點擊進入壘包主控台查看各賽事社群直播頻道！</p>
+                    <p>向下滾動或點擊右側金色圈圈進入壘包主控台！</p>
                 </div>
             </div>
 
-            <!-- 輪播圖片二 -->
             <div class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://picsum.photos');">
                 <div class="carousel-caption">
                     <h2>年度盛典 ｜ 限定周邊商品開賣</h2>
-                    <p>追蹤我們的官方 Instagram 獲取第一手限量抽獎資訊。</p>
+                    <p>追蹤我們的官方各社群平台獲取第一手限量抽獎資訊。</p>
                 </div>
             </div>
         </div>
@@ -269,62 +293,51 @@
     <section id="page2" class="page-section">
         <div class="baseball-container">
             <div class="field-wrapper">
-                
-                <!-- 內野連接線 -->
                 <div class="diamond-lines"></div>
 
-                <!-- 二壘：Instagram (正上方) -->
+                <!-- 二壘：Instagram -->
                 <a href="https://instagram.com" target="_blank" class="base-card base-2nd">
-                    <!-- 這裡可換成您的本地圖標路徑，目前使用線上萬用代號圖 -->
                     <img src="https://flaticon.com" alt="IG">
                     <span>IG</span>
                 </a>
 
-                <!-- 三壘：YouTube (正左方) -->
+                <!-- 三壘：YouTube -->
                 <a href="https://youtube.com" target="_blank" class="base-card base-3rd">
-                    <img src="https://flaticon.com" alt="YT">
-                    <span>YT</span>
-                </a>
+/* --- 1. 右側圈圈點擊：平滑滾動到該頁面 --- */
+const dotItems = document.querySelectorAll('.dot-item');
 
-                <!-- 一壘：Facebook (正右方) -->
-                <a href="https://facebook.com" target="_blank" class="base-card base-1st">
-                    <img src="https://flaticon.com" alt="FB">
-                    <span>FB</span>
-                </a>
-
-                <!-- 本壘：首頁/功能頁 (正下方) -->
-                <a href="#home" class="base-card base-home">
-                    <img src="https://flaticon.com" alt="首頁">
-                    <span>首頁</span>
-                </a>
-
-                <!-- 中央圈圈：投手丘 (完美的正中央定位) -->
-/* --- 1. 頁首/頁二 分頁切換邏輯 --- */
-function switchPage(pageId) {
-    // 隱藏所有頁面
-    document.querySelectorAll('.page-section').forEach(section => {
-        section.classList.remove('active');
+dotItems.forEach(item => {
+    item.addEventListener('click', function() {
+        const targetId = this.getAttribute('data-target');
+        const targetSection = document.getElementById(targetId);
+        
+        // 平滑滾動到目標區塊
+        targetSection.scrollIntoView({ behavior: 'smooth' });
     });
-    // 移除所有按鈕的高亮狀態
-    document.querySelectorAll('.page-btn').forEach(btn => {
-        btn.classList.remove('active');
-    });
+});
+/* --- 2. 智慧滾輪監聽：滾動時自動高亮對應的金色圈圈 --- */
+const sections = document.querySelectorAll('.page-section');
+
+window.addEventListener('scroll', () => {
+    let currentActiveSectionId = "";
     
-    // 顯示目標頁面與高亮對應按鈕
-    document.getElementById(pageId).classList.add('active');
-    event.currentTarget.classList.add('active');
-}
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        // 當捲動超過該區塊頂部減去一半螢幕高度時，判定進入該頁
+        if (pageYOffset >= sectionTop - window.innerHeight / 2) {
+            currentActiveSectionId = section.getAttribute('id');
+        }
+    });
 
-/* --- 2. 全螢幕最新消息自動輪播邏輯 --- */
-let currentSlide = 0;
-const slides = document.querySelectorAll('.carousel-slide');
-
-function showSlide(index) {
-    slides[currentSlide].classList.remove('active');
-    currentSlide = (index + slides.length) % slides.length;
-    slides[currentSlide].classList.add('active');
-}
-/* --- 2. 全螢幕最新消息自動輪播邏輯 --- */
+    // 更新圈圈的高亮狀態
+    dotItems.forEach(item => {
+        item.classList.remove('active');
+        if (item.getAttribute('data-target') === currentActiveSectionId) {
+            item.classList.add('active');
+        }
+    });
+});
+/* --- 3. 全螢幕最新消息自動輪播邏輯 --- */
 let currentSlide = 0;
 const slides = document.querySelectorAll('.carousel-slide');
 
@@ -338,7 +351,6 @@ function changeSlide(direction) {
     showSlide(currentSlide + direction);
 }
 
-// 每 5 秒自動切換下一張最新消息圖片
 setInterval(() => {
     changeSlide(1);
 }, 5000);
