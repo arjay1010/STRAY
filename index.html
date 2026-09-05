@@ -101,18 +101,20 @@
         }
 
 
-                                      /* --- 頁一：最新消息圖片輪播（🏆毛玻璃霧化背景 RWD 技術） --- */
+                                             /* --- 頁一：最新消息圖片輪播（🏆3D 景深立體版：拉開前後卡片距離） --- */
         .page1-carousel-section {
             background-color: #000;
+            perspective: 1200px; /* 🏆 核心修改：為整個舞台啟動 3D 空間透視感 */
         }
         .carousel-container {
             position: relative;
             width: 100%;
-            height: 100vh; /* 死死鎖定全螢幕一整頁，不與頁二擠在一起 */
+            height: 100vh;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
+            transform-style: preserve-3d; /* 讓內部元素支援 3D 層次 */
         }
         .carousel-slide {
             position: absolute;
@@ -125,13 +127,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            transform-style: preserve-3d;
         }
         .carousel-slide.active {
             opacity: 1;
             z-index: 1;
         }
         
-        /* 🏆 背景那張圖：強制放大到 110% 鋪滿整個全螢幕，並套用嚴重的霧化模糊 */
+        /* 🏆 背景那張圖：降低模糊度，並往後方推深 (translateZ) */
         .carousel-slide img.bg-blur {
             position: absolute;
             top: -5%;
@@ -139,21 +142,29 @@
             width: 110%;
             height: 110%;
             object-fit: cover;
-            /* 調整 px 可以改變模糊程度，數值越大越朦朧，並加上暗色遮罩讓背景更有質感 */
-            filter: blur(15px) brightness(0.6); 
+            /* ✨ 降低模糊到 6px，並稍微再調暗一點點點（brightness 0.55），讓前景更跳出來 */
+            filter: blur(6px) brightness(0.55); 
             z-index: 1;
             pointer-events: none;
+            transform: translateZ(0px); /* 留在 3D 空間的最底層 */
         }
         
-        /* 🏆 前景那張圖：在電腦版上等比例滿版 */
+        /* 🏆 前景主體圖：透過尺寸縮小與強烈陰影，強行拉開與背景的前後空間深度 */
         .carousel-slide img.main-img {
             position: relative;
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* 電腦寬螢幕維持震撼的填滿視覺 */
-            object-position: center;
+            width: 90vmin; /* 電腦版微微縮小，留出背景的透視空間 */
+            height: 80vh;
+            object-fit: contain; /* 確保文字絕對不裁切 */
             display: block;
             z-index: 2;
+            
+            /* ✨ 核心修改一：加上強烈且帶有一點金色微光的高質感複合式立體陰影 */
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 
+                        0 0 40px rgba(212, 175, 55, 0.15);
+            
+            /* ✨ 核心修改二：在 3D 空間中，強行讓這張卡片往前飄浮 60px，拉開極強的景深距離 */
+            transform: translateZ(60px); 
+            border-radius: 8px; /* 加上微圓角，更有懸浮卡片的精緻實體感 */
         }
         
         /* 底部控制按鈕容器定位 */
@@ -161,7 +172,7 @@
             position: absolute;
             bottom: 40px;
             left: 50%;
-            transform: translateX(-50%);
+            transform: translateX(-50%) translateZ(70px); /* 按鈕浮在最表層 */
             z-index: 10;
         }
         .carousel-controls-bottom {
@@ -184,16 +195,20 @@
             box-shadow: 0 0 10px #d4af37;
         }
 
-        /* 📱 專屬手機版 RWD 覆寫：觸發不裁切，改由同色霧化背景補滿上下缺塊 */
+        /* 📱 專屬手機版 RWD 覆寫：保持 3D 懸浮與不裁切 */
         @media (max-width: 768px) {
             .carousel-container {
-                height: 100vh !important; /* 手機版也是死死霸佔一整頁 */
+                height: 100vh !important;
+            }
+            .carousel-slide img.bg-blur {
+                filter: blur(5px) brightness(0.5); /* 手機螢幕小，模糊度稍微再調低一點點，質感更好 */
             }
             .carousel-slide img.main-img {
-                width: 100%;
+                width: 90%; /* 手機版寬度縮小到 90%，讓兩側大面積露出後方的 3D 霧化背景 */
                 height: auto;
-                object-fit: contain; /* 🏆 核心修改：手機上等比例縮放，確保文字 100% 完整顯示，絕對不裁切 */
-                max-height: 85vh; /* 留下一點點下方空間給換頁按鈕 */
+                max-height: 70vh; /* 留出上下空間，突顯懸浮卡片感 */
+                transform: translateZ(40px); /* 手機版一樣維持立體飄浮深度 */
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.9);
             }
             .carousel-caption {
                 bottom: 40px;
@@ -203,6 +218,7 @@
                 padding: 4px 14px;
             }
         }
+
 
         /* --- 頁二：壘包功能區塊樣式（🏆終極幾何修正版：完美菱形與絕對置中） --- */
         .baseball-container {
