@@ -430,5 +430,218 @@
         }
         setInterval(() => { changeSlide(1); }, 5000);
     </script>
+    </script> <!-- 這是原有的全域腳本結尾，防錯閉合 -->
+
+    <!-- ==========================================
+       style 區塊：第 3 頁戰績圖 3D 視覺樣式
+       ========================================== -->
+    <style>
+        /* 第 3 頁主容器 */
+        #page3.page-section {
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100%;
+            padding: 40px;
+            overflow: hidden;
+        }
+
+        /* 3D 視差舞台：啟動深度透視感 */
+        .parallax-stage {
+            perspective: 1000px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* 🏆 3D 卡片主體 */
+        .standings-card {
+            position: relative;
+            width: 80vmin;  
+            height: auto;
+            max-width: 650px;
+            background: #111;
+            border: 2px solid #d4af37;
+            border-radius: 16px;
+            padding: 10px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7), 0 0 15px rgba(212, 175, 55, 0.1);
+            transform-style: preserve-3d; /* 讓內部元素支援 3D 層次 */
+            transition: transform 0.1s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        /* 懸停時外框發光增強 */
+        .standings-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(212, 175, 55, 0.4);
+        }
+
+        /* 戰績圖片本體 */
+        .standings-card img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            border-radius: 10px;
+            display: block;
+            transform: translateZ(30px); /* 讓圖片在 3D 空間中向前浮出 30px */
+            pointer-events: none; /* 防止圖片干擾滑鼠事件 */
+        }
+
+        /* 🏆 金色隨鼠流光保護層 */
+        .card-shine {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 14px;
+            background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.15) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 5;
+            mix-blend-mode: screen;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            transform: translateZ(31px); /* 流光鎖在圖片最表層 */
+        }
+        .standings-card:hover .card-shine {
+            opacity: 1;
+        }
+
+        /* 📱 手機版 RWD 降級優化：手機上關閉 3D 避免晃動頭暈，改為精緻放大 */
+        @media (max-width: 768px) {
+            #page3.page-section {
+                height: auto !important;
+                padding: 40px 20px;
+            }
+            .standings-card {
+                width: 100%;
+                transform: none !important; /* 關閉 3D 傾斜 */
+                transition: transform 0.3s ease;
+            }
+            .standings-card:active {
+                transform: scale(1.03) !important; /* 手機按住時微幅放大 */
+            }
+            .standings-card img {
+                transform: none !important;
+            }
+            .card-shine {
+                display: none; /* 手機不跑流光 */
+            }
+        }
+    </style>
+
+    <!-- ==========================================
+       HTML 區塊：第 3 頁戰績架構與右側第 3 點選單
+       ========================================== -->
+    <!-- 頁三：球隊戰績 3D 視差區塊 -->
+    <section id="page3" class="page-section">
+        <div class="parallax-stage">
+            <div class="standings-card" id="parallax-card">
+                <!-- 📌 請將 src 裡換成您準備好的戰績圖檔名（如 standings.jpg） -->
+                <img src="https://picsum.photos" alt="球隊戰績表">
+                <!-- 流光層 -->
+                <div class="card-shine" id="card-shine-layer"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+       JavaScript 區塊：第 3 頁專屬 3D 視差與導覽擴充
+       ========================================== -->
+    <script>
+        /* --- A. 動態擴充右側導覽列：在原本的圈圈清單裡補上第三點 --- */
+        const navContainer = document.querySelector('.dot-navigation');
+        if (navContainer) {
+            // 建立第三個戰績點點
+            const newDot = document.createElement('div');
+            newDot.className = 'dot-item';
+            newDot.setAttribute('data-target', 'page3');
+            newDot.innerHTML = '<span class="dot-label">📊 球隊戰績</span><div class="dot-circle"></div>';
+            navContainer.appendChild(newDot);
+        }
+
+        /* --- B. 擴充原有圈圈的點擊與滾輪監聽邏輯 --- */
+        const allDotItems = document.querySelectorAll('.dot-item');
+        const allSections = document.querySelectorAll('.page-section');
+
+        // 重新為所有點點（包含新老點點）補上點擊流暢滾動
+        allDotItems.forEach(item => {
+            // 先清除舊監聽防止重複綁定
+            item.replaceWith(item.cloneNode(true));
+        });
+        
+        // 重新獲取綁定
+        const refreshedDots = document.querySelectorAll('.dot-item');
+        refreshedDots.forEach(item => {
+            item.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // 即時滾輪動態追蹤第 3 頁
+        window.addEventListener('scroll', () => {
+            let activeId = "";
+            allSections.forEach(section => {
+                if (window.pageYOffset >= section.offsetTop - window.innerHeight / 2) {
+                    activeId = section.getAttribute('id');
+                }
+            });
+            refreshedDots.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('data-target') === activeId) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        /* --- C. 🏆 核心 3D 視差與金色滑鼠流光演算腳本 --- */
+        const card = document.getElementById('parallax-card');
+        const shine = document.getElementById('card-shine-layer');
+
+        if (card && shine && window.innerWidth > 768) {
+            card.addEventListener('mousemove', (e) => {
+                const cardRect = card.getBoundingClientRect();
+                
+                // 計算滑鼠在卡片內部的相對座標位置 (0 到 寬度/高度)
+                const x = e.clientX - cardRect.left;
+                const y = e.clientY - cardRect.top;
+                
+                // 將座標轉化為以中心點為 0 的相對百分比 (-0.5 到 0.5)
+                const xc = cardRect.width / 2;
+                const yc = cardRect.height / 2;
+                const dx = x - xc;
+                const dy = y - yc;
+                
+                // 🏆 計算旋轉角度 (限制在最大傾斜 ±15 度以內，動作精緻不浮誇)
+                const tiltX = (dy / yc) * -15;
+                const tiltY = (dx / xc) * 15;
+                
+                // 讓 3D 卡片產生扭轉
+                card.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+                
+                // 🏆 金色流光動態跟隨：讓放射漸層的中心點死死跟著滑鼠座標走
+                const px = (x / cardRect.width) * 100;
+                const py = (y / cardRect.height) * 100;
+                shine.style.background = `radial-gradient(circle at ${px}% ${py}%, rgba(212, 175, 55, 0.25) 0%, transparent 60%)`;
+            });
+
+            // 當滑鼠離開卡片時，平滑地校正回原位並熄滅流光
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `rotateX(0deg) rotateY(0deg)`;
+                card.style.transition = `transform 0.5s ease`;
+            });
+
+            card.addEventListener('mouseenter', () => {
+                card.style.transition = `none`; // 進入時取消延遲，手感才即時
+            });
+        }
+    </script>
+</body>
+</html>
+
 </body>
 </html>
