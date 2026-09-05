@@ -300,7 +300,7 @@
 </style>
 <style>
 
-        /* --- 頁二：壘包功能區塊樣式（✨全新修正：純金黃色實線與完美菱形） --- */
+                /* --- 頁二：壘包功能區塊樣式（🏆終極幾何修正版：完美菱形與絕對置中） --- */
         .baseball-container {
             display: flex;
             justify-content: center;
@@ -308,6 +308,7 @@
             width: 100%;
             height: 100vh;
             padding: 40px;
+            position: relative;
         }
         .field-wrapper {
             position: relative;
@@ -316,8 +317,6 @@
             max-width: 550px;
             max-height: 550px;
         }
-        
-        /* 🏆 關鍵修改：虛線 (dashed) 改為金色實線 (solid) */
         .diamond-lines {
             position: absolute;
             top: 15%;
@@ -328,7 +327,6 @@
             transform: rotate(45deg);
             z-index: 1;
         }
-        
         .center-circle {
             position: absolute;
             top: 50%;
@@ -343,69 +341,37 @@
             transition: 0.5s;
             box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
         }
-        
-                /* 🏆 終極修正版：改用偽元素製作背景菱形，徹底根除旋轉位移問題 */
         .base-card {
             position: absolute;
             width: 85px;
             height: 85px;
+            background: #111;
+            border: 2px solid #d4af37;
+            border-radius: 8px; 
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             z-index: 3;
             text-decoration: none;
             color: #fff;
-            background: transparent; /* 按鈕本體保持透明不旋轉 */
         }
-        
-        /* 🎨 這裡單獨繪製金色菱形背景 */
-        .base-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #111;
-            border: 2px solid #d4af37;
-            border-radius: 8px;
-            transform: rotate(45deg); /* 只有背景轉 45 度 */
-            transition: all 0.3s ease;
-            z-index: -1; /* 讓背景留在文字圖片後方 */
-        }
-        
-        /* 懸停發光特效：只讓背景菱形發光 */
-        .base-card:hover::before {
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.8);
-            background: #222;
-        }
-        
-        /* 當滑鼠懸停在按鈕上時，同步控制中央圓圈發光 */
-        .base-card:hover ~ .center-circle {
-            box-shadow: 0 0 25px #d4af37;
-            transform: translate(-50%, -50%) scale(1.2);
-        }
-        
-        /* 🏆 內容容器：因為按鈕本身沒轉，這裡完全不需要任何反向旋轉，自然絕對置中 */
         .base-content-inner {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            transform: rotate(-45deg);
             width: 100%;
             height: 100%;
         }
-        
         .base-content-inner img {
-            width: 30px;
-            height: 30px;
+            width: 28px;
+            height: 28px;
             margin-bottom: 4px;
             object-fit: contain;
             display: block;
         }
-        
         .base-content-inner span {
             font-size: 0.75rem;
             font-weight: bold;
@@ -414,24 +380,120 @@
             white-space: nowrap;
             text-align: center;
             display: block;
+            width: 100%;
         }
-        
-        /* 四個壘包在球場上的精確位置對齊 (純平移，完全不加入 rotate) */
-        .base-2nd { top: 0; left: 50%; transform: translateX(-50%); }                       
-        .base-2nd:hover { transform: translateX(-50%) scale(1.1); }
-        
-        .base-3rd { top: 50%; left: 0; transform: translateY(-50%); }                       
-        .base-3rd:hover { transform: translateY(-50%) scale(1.1); }
-        
-        .base-1st { top: 50%; right: 0; transform: translateY(-50%); }                      
-        .base-1st:hover { transform: translateY(-50%) scale(1.1); }
-        
-        .base-home { bottom: 0; left: 50%; transform: translateX(-50%); }                  
-        .base-home:hover { transform: translateX(-50%) scale(1.1); }
-
+        .base-2nd { top: 0; left: 50%; transform: translateX(-50%) rotate(45deg); }                       
+        .base-2nd:hover { transform: translateX(-50%) rotate(45deg) scale(1.1); box-shadow: 0 0 20px rgba(212, 175, 55, 0.8); background: #222; }
+        .base-3rd { top: 50%; left: 0; transform: translateY(-50%) rotate(45deg); }                       
+        .base-3rd:hover { transform: translateY(-50%) rotate(45deg) scale(1.1); box-shadow: 0 0 20px rgba(212, 175, 55, 0.8); background: #222; }
+        .base-1st { top: 50%; right: 0; transform: translateY(-50%) rotate(45deg); }                      
+        .base-1st:hover { transform: translateY(-50%) rotate(45deg) scale(1.1); box-shadow: 0 0 20px rgba(212, 175, 55, 0.8); background: #222; }
+        .base-home { bottom: 0; left: 50%; transform: translateX(-50%) rotate(45deg); }                  
+        .base-home:hover { transform: translateX(-50%) rotate(45deg) scale(1.1); box-shadow: 0 0 20px rgba(212, 175, 55, 0.8); background: #222; }
+        .base-card:hover ~ .center-circle {
+            box-shadow: 0 0 25px #d4af37;
+            transform: translate(-50%, -50%) scale(1.2);
+        }
     </style>
 </head>
 <body>
+
+    <div class="dot-navigation">
+        <div class="dot-item active" data-target="page1">
+            <span class="dot-label">📢 最新消息</span>
+            <div class="dot-circle"></div>
+        </div>
+        <div class="dot-item" data-target="page2">
+            <span class="dot-label">⚾ 壘包主控台</span>
+            <div class="dot-circle"></div>
+        </div>
+    </div>
+
+    <section id="page2" class="page-section">
+        <div class="baseball-container">
+            <div class="field-wrapper">
+                <div class="diamond-lines"></div>
+
+                <a href="https://instagram.com" target="_blank" class="base-card base-2nd">
+                    <div class="base-content-inner">
+                        <img src="https://flaticon.com" alt="IG">
+                        <span>IG</span>
+                    </div>
+                </a>
+
+                <a href="https://youtube.com" target="_blank" class="base-card base-3rd">
+                    <div class="base-content-inner">
+                        <img src="https://flaticon.com" alt="YT">
+                        <span>YT</span>
+                    </div>
+                </a>
+
+                <a href="https://facebook.com" target="_blank" class="base-card base-1st">
+                    <div class="base-content-inner">
+                        <img src="https://flaticon.com" alt="FB">
+                        <span>FB</span>
+                    </div>
+                </a>
+
+                <a href="#page1" target="_self" class="base-card base-home" id="home-base-btn">
+                    <div class="base-content-inner">
+                        <img src="https://flaticon.com" alt="首頁">
+                        <span>首頁</span>
+                    </div>
+                </a>
+
+                <div class="center-circle"></div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const dotItems = document.querySelectorAll('.dot-item');
+        dotItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const targetSection = document.getElementById(targetId);
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        document.getElementById('home-base-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('page1').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        const sections = document.querySelectorAll('.page-section');
+        window.addEventListener('scroll', () => {
+            let currentActiveSectionId = "";
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (window.pageYOffset >= sectionTop - window.innerHeight / 2) {
+                    currentActiveSectionId = section.getAttribute('id');
+                }
+            });
+            dotItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('data-target') === currentActiveSectionId) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        function showSlide(index) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (index + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+        setInterval(() => { changeSlide(1); }, 5000);
+    </script>
+</body>
+</html>
+
 
     <!-- 右側替代滾動條：金色精緻圈圈導覽選單 -->
     <div class="dot-navigation">
