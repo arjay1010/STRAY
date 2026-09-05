@@ -17,15 +17,13 @@
             font-family: "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
             background-color: #000;
             color: #fff;
-            /* 🏆 關鍵：隱藏全網頁右側的傳統外觀滾動條 */
-            scrollbar-width: none; /* Firefox */
+            scrollbar-width: none; /* 隱藏滾動條 Firefox */
         }
-        /* Chrome, Safari, Opera 隱藏滾動條 */
         body::-webkit-scrollbar {
-            display: none;
+            display: none; /* 隱藏滾動條 Chrome/Safari */
         }
 
-        /* --- 🏆 右側高質感金色圈圈導覽列 --- */
+        /* --- 右側金色圈圈導覽列 --- */
         .dot-navigation {
             position: fixed;
             right: 30px;
@@ -37,8 +35,6 @@
             gap: 25px;
             align-items: flex-end;
         }
-
-        /* 單個圈圈項目包裹器 */
         .dot-item {
             display: flex;
             align-items: center;
@@ -46,22 +42,18 @@
             cursor: pointer;
             position: relative;
         }
-
-        /* 圈圈內顯現的文字（質感精緻感來源） */
         .dot-label {
             color: #d4af37;
             font-size: 0.85rem;
             font-weight: bold;
             letter-spacing: 2px;
-            opacity: 0; /* 預設隱藏 */
+            opacity: 0;
             transform: translateX(10px);
             transition: all 0.4s ease;
             white-space: nowrap;
             pointer-events: none;
             text-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
         }
-
-        /* 金色圈圈本體 */
         .dot-circle {
             width: 12px;
             height: 12px;
@@ -71,33 +63,26 @@
             transition: all 0.4s ease;
             box-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
         }
-
-        /* 當該頁面被激活 (Active) 或 滑鼠懸停 (Hover) 時的華麗特效 */
         .dot-item.active .dot-circle,
         .dot-item:hover .dot-circle {
             background: #d4af37;
             transform: scale(1.3);
             box-shadow: 0 0 15px #d4af37, 0 0 25px rgba(212, 175, 55, 0.6);
         }
-
-        /* 激活或懸停時，同步向左滑出高質感文字 */
         .dot-item.active .dot-label,
         .dot-item:hover .dot-label {
             opacity: 1;
             transform: translateX(0);
         }
 
-
-        /* --- 網頁段落區塊設定 (改成滾輪上下滑動流暢模式) --- */
+        /* --- 網頁段落區塊 --- */
         .page-section {
             width: 100%;
-            height: 100vh; /* 每一頁都是全螢幕 */
+            height: 100vh;
             position: relative;
         }
 
-        /* ==========================================
-           頁一：全螢幕最新消息圖片輪播 (Carousel)
-           ========================================== */
+        /* --- 頁一：最新消息圖片輪播 --- */
         .carousel-container {
             position: relative;
             width: 100%;
@@ -157,9 +142,7 @@
         .arrow-left { left: 20px; }
         .arrow-right { right: 20px; }
 
-        /* ==========================================
-           頁二：標準棒球內野壘包功能區塊
-           ========================================== */
+        /* --- 頁二：壘包功能區塊 --- */
         .baseball-container {
             display: flex;
             justify-content: center;
@@ -249,9 +232,8 @@
 </head>
 <body>
 
-    <!-- 🏆 右側替代滾動條：金色精緻圈圈導覽選單 -->
+    <!-- 右側替代滾動條：金色精緻圈圈導覽選單 -->
     <div class="dot-navigation">
-        <!-- 點擊圈圈會平滑滾動到指定的 section，文字在 active 或 hover 時才側向滑出 -->
         <div class="dot-item active" data-target="page1">
             <span class="dot-label">📢 最新消息</span>
             <div class="dot-circle"></div>
@@ -262,9 +244,7 @@
         </div>
     </div>
 
-    <!-- ==========================================
-       頁一：全螢幕輪播圖區塊
-       ========================================== -->
+    <!-- 頁一：全螢幕輪播圖區塊 -->
     <section id="page1" class="page-section">
         <div class="carousel-container">
             <button class="carousel-arrow arrow-left" onclick="changeSlide(-1)">&#10094;</button>
@@ -286,10 +266,7 @@
         </div>
     </section>
 
-
-    <!-- ==========================================
-       頁二：修正後的響應式壘包功能區塊
-       ========================================== -->
+    <!-- 頁二：修正後的響應式壘包功能區塊 -->
     <section id="page2" class="page-section">
         <div class="baseball-container">
             <div class="field-wrapper">
@@ -303,54 +280,88 @@
 
                 <!-- 三壘：YouTube -->
                 <a href="https://youtube.com" target="_blank" class="base-card base-3rd">
-/* --- 1. 右側圈圈點擊：平滑滾動到該頁面 --- */
-const dotItems = document.querySelectorAll('.dot-item');
+                    <img src="https://flaticon.com" alt="YT">
+                    <span>YT</span>
+                </a>
 
-dotItems.forEach(item => {
-    item.addEventListener('click', function() {
-        const targetId = this.getAttribute('data-target');
-        const targetSection = document.getElementById(targetId);
+                <!-- 一壘：Facebook -->
+                <a href="https://facebook.com" target="_blank" class="base-card base-1st">
+                    <img src="https://flaticon.com" alt="FB">
+                    <span>FB</span>
+                </a>
+
+                <!-- 本壘：首頁 -->
+                <a href="#home" class="base-card base-home">
+                    <img src="https://flaticon.com" alt="首頁">
+                    <span>首頁</span>
+                </a>
+
+                <!-- 中央圈圈：投手丘 -->
+                <div class="center-circle"></div>
+            </div>
+---
+                <!-- 中央圈圈：投手丘 -->
+                <div class="center-circle"></div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        /* --- 1. 右側圈圈點擊：平滑滾動到該頁面 --- */
+        const dotItems = document.querySelectorAll('.dot-item');
+
+    <script>
+        /* --- 1. 右側圈圈點擊：平滑滾動到該頁面 --- */
+        const dotItems = document.querySelectorAll('.dot-item');
         
-        // 平滑滾動到目標區塊
-        targetSection.scrollIntoView({ behavior: 'smooth' });
-    });
-});
-/* --- 2. 智慧滾輪監聽：滾動時自動高亮對應的金色圈圈 --- */
-const sections = document.querySelectorAll('.page-section');
+        dotItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const targetSection = document.getElementById(targetId);
+                
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
 
-window.addEventListener('scroll', () => {
-    let currentActiveSectionId = "";
-    
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        // 當捲動超過該區塊頂部減去一半螢幕高度時，判定進入該頁
-        if (pageYOffset >= sectionTop - window.innerHeight / 2) {
-            currentActiveSectionId = section.getAttribute('id');
+        /* --- 2. 智慧滾輪監聽：滾動時自動高亮對應的金色圈圈 --- */
+        const sections = document.querySelectorAll('.page-section');
+        
+        window.addEventListener('scroll', () => {
+            let currentActiveSectionId = "";
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (window.pageYOffset >= sectionTop - window.innerHeight / 2) {
+                    currentActiveSectionId = section.getAttribute('id');
+                }
+            });
+
+            dotItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('data-target') === currentActiveSectionId) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        /* --- 3. 全螢幕最新消息自動輪播邏輯 --- */
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+
+        function showSlide(index) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (index + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
         }
-    });
 
-    // 更新圈圈的高亮狀態
-    dotItems.forEach(item => {
-        item.classList.remove('active');
-        if (item.getAttribute('data-target') === currentActiveSectionId) {
-            item.classList.add('active');
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
         }
-    });
-});
-/* --- 3. 全螢幕最新消息自動輪播邏輯 --- */
-let currentSlide = 0;
-const slides = document.querySelectorAll('.carousel-slide');
 
-function showSlide(index) {
-    slides[currentSlide].classList.remove('active');
-    currentSlide = (index + slides.length) % slides.length;
-    slides[currentSlide].classList.add('active');
-}
-
-function changeSlide(direction) {
-    showSlide(currentSlide + direction);
-}
-
-setInterval(() => {
-    changeSlide(1);
-}, 5000);
+        setInterval(() => {
+            changeSlide(1);
+        }, 5000);
+    </script>
+</body>
+</html>
+```
