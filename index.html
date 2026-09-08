@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>高質感金色導覽控制台</title>
+    <title>STRAY-HOME</title>
+        <!-- 📌 插入這行來更改網站名稱旁的小圖示 -->
+    <link rel="icon" href="https://i.ibb.co/rCptGSd/STRAYICON.png" type="image/x-icon">
+
     <style>
-                /* --- 全域重設（🏆終極解鎖版：徹底消滅手機版跨頁大空白） --- */
+                        /* --- 全域重設（🏆穩健滿版底圖版：徹底拔除移動功能，保證背景永不丟失） --- */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -15,221 +18,34 @@
             width: 100%;
             height: 100%;
             font-family: "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
-            background-color: #000;
-            color: #fff;
-            scrollbar-width: none; /* 隱藏滾動條 Firefox */
-        }
-        body::-webkit-scrollbar {
-            display: none; /* 隱藏滾動條 Chrome/Safari */
-        }
+            overflow: hidden; /* 防止產生不必要的滾動條 */
 
-        /* 📱 關鍵核心：當寬度小於 768px（手機直向）時，強制解除 html 與 body 的滿版鎖定 */
-        @media (max-width: 768px) {
-            html, body {
-                height: auto !important;
-                overflow-x: hidden !important;
-            }
+            /* 🏆 核心設定：直接在這裡將您的球場圖片鋪滿全螢幕背景 */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0.3)), 
+                              url('https://i.ibb.co/gFmFm1Qv/STRAY-1.png');
+
+            /* 讓背景圖完美自適應、絕不變形、絕不露出黑邊 */
+            background-size: 120% auto; /* 寬度放大到 120%，高度自適應。數字越小圖片越小 */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-color: #000; /* 圖片載入前的備用黑底 */
         }
 
 
-        /* --- 右側金色圈圈導覽列 --- */
-        .dot-navigation {
-            position: fixed;
-            right: 30px;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            align-items: flex-end;
-        }
-        .dot-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            cursor: pointer;
-            position: relative;
-        }
-        .dot-label {
-            color: #d4af37;
-            font-size: 0.85rem;
-            font-weight: bold;
-            letter-spacing: 2px;
-            opacity: 0;
-            transform: translateX(10px);
-            transition: all 0.4s ease;
-            white-space: nowrap;
-            pointer-events: none;
-            text-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
-        }
-        .dot-circle {
-            width: 12px;
-            height: 12px;
-            border: 2px solid #d4af37;
-            border-radius: 50%;
-            background: transparent;
-            transition: all 0.4s ease;
-            box-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
-        }
-        .dot-item.active .dot-circle,
-        .dot-item:hover .dot-circle {
-            background: #d4af37;
-            transform: scale(1.3);
-            box-shadow: 0 0 15px #d4af37, 0 0 25px rgba(212, 175, 55, 0.6);
-        }
-        .dot-item.active .dot-label,
-        .dot-item:hover .dot-label {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-               /* --- 網頁段落區塊（✨已修正：手機版高度自動貼齊，消滅空白間隔） --- */
-        .page-section {
-            width: 100%;
-            height: 100vh; /* 電腦版維持完美全螢幕捲動 */
-            position: relative;
-        }
-
-        /* 📱 專屬手機版 RWD 修正：移除強制的全螢幕高度 */
-        @media (max-width: 768px) {
-            /* 讓第一頁（最新消息）在手機上的高度等於圖片高度，絕不多留 1 像素的空白 */
-            #page1.page-section {
-                height: auto !important; 
-                min-height: auto !important;
-            }
-        }
 
 
-                                             /* --- 頁一：最新消息圖片輪播（🏆3D 景深立體版：拉開前後卡片距離） --- */
-        .page1-carousel-section {
-            background-color: #000;
-            perspective: 1200px; /* 🏆 核心修改：為整個舞台啟動 3D 空間透視感 */
-        }
-        .carousel-container {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transform-style: preserve-3d; /* 讓內部元素支援 3D 層次 */
-        }
-        .carousel-slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transform-style: preserve-3d;
-        }
-        .carousel-slide.active {
-            opacity: 1;
-            z-index: 1;
-        }
-        
-        /* 🏆 背景那張圖：降低模糊度，並往後方推深 (translateZ) */
-        .carousel-slide img.bg-blur {
-            position: absolute;
-            top: -5%;
-            left: -5%;
-            width: 110%;
-            height: 110%;
-            object-fit: cover;
-            /* ✨ 降低模糊到 6px，並稍微再調暗一點點點（brightness 0.55），讓前景更跳出來 */
-            filter: blur(6px) brightness(0.55); 
-            z-index: 1;
-            pointer-events: none;
-            transform: translateZ(0px); /* 留在 3D 空間的最底層 */
-        }
-        
-        /* 🏆 前景主體圖：透過尺寸縮小與強烈陰影，強行拉開與背景的前後空間深度 */
-        .carousel-slide img.main-img {
-            position: relative;
-            width: 90vmin; /* 電腦版微微縮小，留出背景的透視空間 */
-            height: 80vh;
-            object-fit: contain; /* 確保文字絕對不裁切 */
-            display: block;
-            z-index: 2;
-            
-            /* ✨ 核心修改一：加上強烈且帶有一點金色微光的高質感複合式立體陰影 */
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 
-                        0 0 40px rgba(212, 175, 55, 0.15);
-            
-            /* ✨ 核心修改二：在 3D 空間中，強行讓這張卡片往前飄浮 60px，拉開極強的景深距離 */
-            transform: translateZ(60px); 
-            border-radius: 8px; /* 加上微圓角，更有懸浮卡片的精緻實體感 */
-        }
-        
-        /* 底部控制按鈕容器定位 */
-        .carousel-caption {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%) translateZ(70px); /* 按鈕浮在最表層 */
-            z-index: 10;
-        }
-        .carousel-controls-bottom {
-            display: flex;
-            gap: 20px;
-        }
-        .carousel-arrow {
-            background: rgba(0, 0, 0, 0.7);
-            color: #fff;
-            border: 1px solid #d4af37;
-            font-size: 1.4rem;
-            padding: 6px 18px;
-            cursor: pointer;
-            transition: 0.3s;
-            border-radius: 4px;
-        }
-        .carousel-arrow:hover { 
-            background: #d4af37; 
-            color: #000; 
-            box-shadow: 0 0 10px #d4af37;
-        }
-
-        /* 📱 專屬手機版 RWD 覆寫：保持 3D 懸浮與不裁切 */
-        @media (max-width: 768px) {
-            .carousel-container {
-                height: 100vh !important;
-            }
-            .carousel-slide img.bg-blur {
-                filter: blur(5px) brightness(0.5); /* 手機螢幕小，模糊度稍微再調低一點點，質感更好 */
-            }
-            .carousel-slide img.main-img {
-                width: 90%; /* 手機版寬度縮小到 90%，讓兩側大面積露出後方的 3D 霧化背景 */
-                height: auto;
-                max-height: 70vh; /* 留出上下空間，突顯懸浮卡片感 */
-                transform: translateZ(40px); /* 手機版一樣維持立體飄浮深度 */
-                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.9);
-            }
-            .carousel-caption {
-                bottom: 40px;
-            }
-            .carousel-arrow {
-                font-size: 1.1rem;
-                padding: 4px 14px;
-            }
-        }
-
-
-        /* --- 頁二：壘包功能區塊樣式（🏆終極幾何修正版：完美菱形與絕對置中） --- */
-        .baseball-container {
+        /* --- 🏆 核心獨立容器：讓整個球場在視窗中百分之百絕對居中 --- */
+        .baseball-standalone-container {
             display: flex;
             justify-content: center;
             align-items: center;
             width: 100%;
             height: 100vh;
             padding: 40px;
-            position: relative;
         }
+
+        /* 鎖定球場最外圍容器尺寸，支援動態等比例自適應縮放 */
         .field-wrapper {
             position: relative;
             width: 75vmin;  
@@ -237,16 +53,20 @@
             max-width: 550px;
             max-height: 550px;
         }
+
+        /* 繪製完美金黃色實線內野 */
         .diamond-lines {
             position: absolute;
             top: 15%;
             left: 15%;
             width: 70%;
             height: 70%;
-            border: 2px solid rgba(212, 175, 55, 0.8); 
+            border: 1.5px solid rgba(212, 175, 55, 0.7); 
             transform: rotate(45deg);
             z-index: 1;
         }
+
+        /* 投手丘中央圈圈定位 */
         .center-circle {
             position: absolute;
             top: 50%;
@@ -261,6 +81,8 @@
             transition: 0.5s;
             box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
         }
+
+        /* 🏆 壘包按鈕：維持標準正方形，並利用 rotate(45deg) 轉成完美菱形 */
         .base-card {
             position: absolute;
             width: 85px;
@@ -276,15 +98,19 @@
             text-decoration: none;
             color: #fff;
         }
+
+        /* 🏆 內容包裹容器：用來把圖片和文字轉回來 (-45deg)，強制水平垂直絕對置中 */
         .base-content-inner {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transform: rotate(-45deg);
+            transform: rotate(-45deg); /* 反向旋轉，字才不會跟著歪斜 */
             width: 100%;
             height: 100%;
         }
+
+        /* 限定圖標的最大寬高，絕不允許集體爆開破圖 */
         .base-content-inner img {
             width: 28px;
             height: 28px;
@@ -292,6 +118,7 @@
             object-fit: contain;
             display: block;
         }
+
         .base-content-inner span {
             font-size: 0.75rem;
             font-weight: bold;
@@ -302,373 +129,341 @@
             display: block;
             width: 100%;
         }
+
+        /* 🏆 四個壘包在球場邊角的精密定位與基礎 45 度旋轉（完美融入動畫與排版） */
         .base-2nd { top: 0; left: 50%; transform: translateX(-50%) rotate(45deg); }                       
         .base-2nd:hover { transform: translateX(-50%) rotate(45deg) scale(1.1); box-shadow: 0 0 20px rgba(212, 175, 55, 0.8); background: #222; }
+
         .base-3rd { top: 50%; left: 0; transform: translateY(-50%) rotate(45deg); }                       
         .base-3rd:hover { transform: translateY(-50%) rotate(45deg) scale(1.1); box-shadow: 0 0 20px rgba(212, 175, 55, 0.8); background: #222; }
+
         .base-1st { top: 50%; right: 0; transform: translateY(-50%) rotate(45deg); }                      
         .base-1st:hover { transform: translateY(-50%) rotate(45deg) scale(1.1); box-shadow: 0 0 20px rgba(212, 175, 55, 0.8); background: #222; }
+
         .base-home { bottom: 0; left: 50%; transform: translateX(-50%) rotate(45deg); }                  
         .base-home:hover { transform: translateX(-50%) rotate(45deg) scale(1.1); box-shadow: 0 0 20px rgba(212, 175, 55, 0.8); background: #222; }
+
+        /* 當滑鼠懸停在任一按鈕上時，中央圓圈的共振發光特效 */
         .base-card:hover ~ .center-circle {
             box-shadow: 0 0 25px #d4af37;
             transform: translate(-50%, -50%) scale(1.2);
         }
+                /* 🏆 終極修正版：利用雙層五角形疊加，強行逼出全閉合金色邊框 */
+        .base-home {
+            position: absolute;
+            bottom: -44px !important; 
+            left: 50%;
+            transform: translateX(-50%) rotate(0deg) !important;
+            width: 88px;
+            height: 88px;
+
+            /* ✨ 關鍵修改一：移除原本正方形的 border 設定，改由背景和剪裁來做出金色底層 */
+            border: none !important;
+            background: #d4af37 !important; /* 這個底色會變成未來的金色邊框 */
+            clip-path: polygon(0% 0%, 100% 0%, 100% 45%, 50% 100%, 0% 45%);
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        /* ✨ 關鍵修改二：利用偽元素在上方疊加一個小 2 像素的黑色五角形，藉此露出周圍的金色邊框 */
+        .base-home::after {
+            content: '';
+            position: absolute;
+            /* 🏆 四周精準往內縮小 2 像素（這就是邊框的粗細） */
+            top: 2px;
+            left: 2px;
+            right: 2px;
+            bottom: 2px;
+            background: #111; /* 內部按鈕的黑底色 */
+            /* 保持一模一樣的五角形剪裁比例 */
+            clip-path: polygon(0% 0%, 100% 0%, 100% 45%, 50% 100%, 0% 45%);
+            z-index: 1;
+            transition: background 0.3s ease;
+        }
+
+        /* 當滑鼠懸停在本壘上時，背景變亮 */
+        .base-home:hover::after {
+            background: #222;
+        }
+
+        /* 修正懸停時的縮放與發光特效，確保下方的尖角也能同步散發金色微光 */
+        .base-home:hover {
+            transform: translateX(-50%) rotate(0deg) scale(1.1) !important;
+            filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.8)); /* 利用智慧濾鏡，強迫五角形全身發光 */
+        }
+
+        /* 🏆 關鍵修正：內容容器必須浮在最表層 (z-index: 2)，才不會被黑色遮罩蓋住 */
+        .base-home .base-content-inner {
+            position: relative;
+            z-index: 2;
+            transform: rotate(0deg) !important;
+            padding-bottom: 12px; /* 微調內部間距，讓圖標與文字完美居中 */
+            width: 100%;
+            height: 100%;
+        }
+        /* 🏆 視覺大升級：將線條調暗加深、壘包全面化為極度俐落的鋼硬直角 */
+
+        /* 1. 內野實線：降低亮度、加入黑色戰術深邃陰影 */
+        .diamond-lines {
+            border: 1px solid rgba(212, 175, 55, 0.45) !important; /* ✨ 調低鮮豔度，改為質感暗金 */
+            /* 加上黑色的戰術線條陰影，讓實線看起來是沉在球場地面上的 */
+            filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.9)); 
+        }
+
+        /* 2. 一到三壘按鈕外框：徹底拔除圓角 (改成 0px)，變回極度俐落的刀鋒直角 */
+        .base-card {
+            border-radius: 0px !important; /* ✨ 拔除圓角，回歸最俐落的鋼硬直角 */
+            border: 2px solid rgba(212, 175, 55, 0.6) !important; /* 邊框也同步調暗質感 */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8); /* 加上硬派底座陰影 */
+        }
+
+        /* 懸停發光同步收斂：不要大面積刺眼，改為俐落的聚焦發光 */
+        .base-card:hover::before, .base-card:hover {
+            border-radius: 0px !important;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.6) !important;
+        }
+
+        /* 3. 本壘按鈕：徹底拔除圓角、修剪出完全筆直俐落的五角形邊框 */
+        .base-home {
+            border-radius: 0px !important;
+            background: rgba(212, 175, 55, 0.6) !important; /* 調暗本壘底層金屬色 */
+            /* 重新精算裁剪座標：移除任何弧度，強迫尖角處呈現絕對的幾何直角 */
+            clip-path: polygon(0% 0%, 100% 0%, 100% 45%, 50% 100%, 0% 45%) !important;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.9)); /* 換成純黑深邃陰影，拿掉原本的刺眼發光 */
+        }
+
+        /* 本壘內層：同步拔除圓角、往內縮小 1.5 像素，確保金色細框粗細完美對齊一到三壘 */
+        .base-home::after {
+            border-radius: 0px !important;
+            top: 1.5px !important;
+            left: 1.5px !important;
+            right: 1.5px !important;
+            bottom: 1.5px !important;
+            clip-path: polygon(0% 0%, 100% 0%, 100% 45%, 50% 100%, 0% 45%) !important;
+        }
+
+        /* 本壘懸停：收斂亮度 */
+        .base-home:hover {
+            filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.5)) !important;
+        }
+        /* 📱 專屬手機版 RWD 終極優化：縮小壘包釋放間距、完整還原背景圖 */
+        @media (max-width: 768px) {
+
+            /* 1. 🏆 核心修改：將手機版背景徹底獨立，換成一張跟電腦版完全不同的新照片 */
+            body, html {
+                /* 
+                   ✨ 關鍵修改點：
+                   linear-gradient(rgba(0,0,0,0.4)...) 同步保留 40% 暗色濾鏡，維持精緻質感。
+                   url('...') 的括號內，請直接填入您想在手機上顯示的「全新照片名稱或網址」！
+                */
+                background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                                  url('https://i.ibb.co/yn3WbFCT/STRAY.png') !important; 
+                
+                /* 根據您的喜好，手機版可以設定 140% 縮放、靠底對齊，確保新照片完美展現 */
+                background-size: 100% auto !important; 
+                background-position: center bottom !important; 
+                background-repeat: no-repeat !important;
+                background-color: #000; 
+            }
+
+
+
+            /* 2. 🏆 核心修改：將球場最外圍容器縮小一點，留出四周的透視空間 */
+            .field-wrapper {
+                width: 80vw !important;  
+                height: 80vw !important;
+            }
+
+            /* 3. 🏆 核心修改：縮小一到三壘按鈕，使其從 85px 降到 65px */
+            .base-card {
+                width: 45px !important;
+                height: 45px !important;
+            }
+
+            /* 同步微調一到三壘內部圖標與字體大小，確保完美置中 */
+            .base-content-inner img {
+                width: 20px !important;
+                height: 20px !important;
+                margin-bottom: 1.2px !important;
+            }
+            .base-content-inner span {
+                font-size: 0.5rem !important;
+            }
+
+            /* 4. 🏆 核心修改：同步將本壘五角形縮小到 68px，並修正溢出定位 */
+            .base-home {
+                bottom: -34px !important; /* 配合 68px 高度，剛好下移一半 */
+                width: 60px !important;
+                height: 60px !important;
+            }
+
+            /* 修正手機版本壘內部黑色遮罩的對齊縮小比例 */
+            .base-home::after {
+                top: 1.5px !important;
+                left: 1.5px !important;
+                right: 1.5px !important;
+                bottom: 1.5px !important;
+            }
+
+            /* 微調本壘內部的間距 */
+            .base-home .base-content-inner {
+                padding-bottom: 8px !important;
+            }
+
+            /* 5. 🏆 核心修改：同步縮小投手丘中央圈圈，使其比例完美對齊 */
+            .center-circle {
+                width: 35px !important;
+                height: 35px !important;
+            }
+        }
+        /* 🏆 專屬樣式：全黑質感前置載入動畫層 */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000; /* 全黑高級感底色 */
+            z-index: 9999; /* 🏆 核心設定：確保它鎖在全網頁的最最上層，蓋住所有壘包 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            /* 離開時的滑動與淡出特效 */
+            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.6s ease;
+        }
+
+        /* LOGO 圖片的控制外觀 */
+        .loading-logo {
+            width: 120px; /* 載入畫面的 LOGO 大小，可自由微調 */
+            height: auto;
+            object-fit: contain;
+            /* 自帶細緻的金色微光充能呼吸燈特效 */
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3));
+            animation: logo-pulse 2s infinite ease-in-out;
+        }
+
+        /* 數字百分比的金色硬派字體 */
+        .loading-counter {
+            font-family: "Impact", "Helvetica Neue", Arial, sans-serif;
+            color: #d4af37; /* 延續您的黑金調性 */
+            font-size: 2.2rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+
+        /* 當載入完成後，觸發此類別讓畫面向上流暢滑開並隱藏 */
+        .loading-screen.fade-out-launcher {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none; /* 解鎖觸控，讓使用者可以點擊後方的壘包 */
+        }
+
+        /* LOGO 呼吸燈動畫效果 */
+        @keyframes logo-pulse {
+            0% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3)); }
+            50% { transform: scale(1.05); filter: drop-shadow(0 0 25px rgba(212, 175, 55, 0.7)); }
+            100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3)); }
+        }
+
+        /* 📱 手機版微調：數字跟 LOGO 稍微縮小，看起來更精緻 */
+        @media (max-width: 768px) {
+            .loading-logo { width: 90px; }
+            .loading-counter { font-size: 1.8rem; }
+        }
+
     </style>
 </head>
 <body>
 
-    <!-- 右側替代滾動條：金色精緻圈圈導覽選單 -->
-    <div class="dot-navigation">
-        <div class="dot-item active" data-target="page1">
-            <span class="dot-label">📢 最新消息</span>
-            <div class="dot-circle"></div>
-        </div>
-        <div class="dot-item" data-target="page2">
-            <span class="dot-label">⚾ 壘包主控台</span>
-            <div class="dot-circle"></div>
+    <!-- 🏆 關鍵核心修改：在網頁最頂層插入這個載入動畫結構 -->
+    <div class="loading-screen" id="loader-screen">
+        <!-- 📌 src 裡請更換為您要放的 LOGO 圖片網址或放在 GitHub 上的檔名（如 logo.png） -->
+        <img src="https://i.ibb.co/rCptGSd/STRAYICON.png" class="loading-logo" alt="LOGO">
+        <!-- 跑動的數字百分比數字 -->
+        <div class="loading-counter" id="loader-counter">0%</div>
+    </div>
+
+    <!-- 獨立版球場主區塊 -->
+    <div class="baseball-standalone-container">
+        <div class="field-wrapper">
+
+            <!-- 金黃色細線內野 -->
+            <div class="diamond-lines"></div>
+
+            <!-- 二壘：Instagram -->
+            <a href="https://www.instagram.com/stray.official.baseball/" target="_blank" class="base-card base-2nd">
+                <div class="base-content-inner">
+                    <img src="https://i.ibb.co/0j5RpbFs/500px-Instagram-icon.webp" alt="IG">
+                    <span>IG</span>
+                </div>
+            </a>
+
+            <!-- 三壘：YouTube -->
+            <a href="https://www.youtube.com/channel/UCPKMd6qnsWnA0CFn2rYVQtw" class="base-card base-3rd">
+                <div class="base-content-inner">
+                    <img src="https://i.ibb.co/LXN2tf5N/960px-You-Tube-full-color-icon-2017-svg.webp" alt="YT">
+                    <span>YT</span>
+                </div>
+            </a>
+
+            <!-- 一壘：Facebook -->
+            <a href="https://www.facebook.com/groups/1057300540985213/posts/26518693757752541/" target="_blank" class="base-card base-1st">
+                <div class="base-content-inner">
+                    <img src="https://i.ibb.co/W4K1DWsJ/500px-2023-Facebook-icon-svg.webp" alt="FB">
+                    <span>FB</span>
+                </div>
+            </a>
+
+            <!-- 本壘：回首頁 -->
+            <a href="https://sites.google.com/view/straybaseball-team/%E9%A6%96%E9%A0%81-home?authuser=0" target="_self" class="base-card base-home">
+                <div class="base-content-inner">
+                    <img src="https://i.ibb.co/rCptGSd/STRAYICON.png" alt="首頁">
+                    <span>首頁</span>
+                </div>
+            </a>
+            <!-- 中央圈圈：投手丘 -->
+            <div class="center-circle"></div>
+
         </div>
     </div>
 
-         <!-- 頁一：全螢幕輪播圖區塊（🏆毛玻璃霧化背景黑科技：手機電腦完美不裁切） -->
-    <section id="page1" class="page-section page1-carousel-section">
-        <div class="carousel-container">
-            
-            <!-- 📌 第一張最新消息 
-                 注意：裡面的兩張 img 請都換成「一模一樣的圖片路徑」
-                 href 修改點擊跳轉網址 -->
-            <a href="這裡改成第一張圖要跳轉的網頁.html" target="_self" class="carousel-slide active">
-                <img src="https://i.ibb.co/ZpJ98rX8/STRAY2026.png" class="bg-blur" alt="背景模糊">
-                <img src="https://i.ibb.co/ZpJ98rX8/STRAY2026.png" class="main-img" alt="主體不裁切">
-            </a>
-
-            <!-- 📌 第二張最新消息 -->
-            <a href="這裡改成第二張圖要跳轉的網頁.html" target="_self" class="carousel-slide">
-                <img src="https://i.ibb.co/whgF68nv/9.png" class="bg-blur" alt="背景模糊">
-                <img src="https://i.ibb.co/whgF68nv/9.png" class="main-img" alt="主體不裁切">
-            </a>
-
-            <!-- 📌 第三張最新消息 -->
-            <a href="這裡改成第三張圖要跳轉的網頁.html" target="_self" class="carousel-slide">
-                <img src="https://i.ibb.co/DfST7yL3/2.png" class="bg-blur" alt="背景模糊">
-                <img src="https://i.ibb.co/DfST7yL3/2.png" class="main-img" alt="主體不裁切">
-            </a>
-
-            <!-- 置中於底部的左右切換按鈕 -->
-            <div class="carousel-caption">
-                <div class="carousel-controls-bottom">
-                    <button class="carousel-arrow arrow-left" onclick="changeSlide(-1)">&#10094;</button>
-                    <button class="carousel-arrow arrow-right" onclick="changeSlide(1)">&#10095;</button>
-                </div>
-            </div>
-            
-        </div>
-    </section>
-
-
-    <!-- 頁二：響應式壘包功能區塊 -->
-    <section id="page2" class="page-section">
-        <div class="baseball-container">
-            <div class="field-wrapper">
-                <div class="diamond-lines"></div>
-
-                <!-- 二壘：Instagram -->
-                <a href="https://www.instagram.com/stray.official.baseball/" target="_blank" class="base-card base-2nd">
-                    <div class="base-content-inner">
-                        <img src="https://i.ibb.co/0j5RpbFs/500px-Instagram-icon.webp" alt="IG">
-                        <span>IG</span>
-                    </div>
-                </a>
-
-                <!-- 三壘：YouTube -->
-                <a href="https://www.youtube.com/channel/UCPKMd6qnsWnA0CFn2rYVQtw" target="_blank" class="base-card base-3rd">
-                    <div class="base-content-inner">
-                        <img src="https://i.ibb.co/LXN2tf5N/960px-You-Tube-full-color-icon-2017-svg.webp" alt="YT">
-                         <span>YT</span> 
-                    </div>
-                </a>
-
-                <!-- 一壘：Facebook -->
-                <a href="https://www.facebook.com/groups/1057300540985213/posts/26518693757752541/" target="_blank" class="base-card base-1st">
-                    <div class="base-content-inner">
-                        <img src="https://i.ibb.co/W4K1DWsJ/500px-2023-Facebook-icon-svg.webp" alt="FB">
-                        <span>FB</span>
-                    </div>
-                </a>
-
-                <!-- 本壘：首頁 -->
-                <a href="https://sites.google.com/view/straybaseball-team/%E9%A6%96%E9%A0%81-home?authuser=0"_self" class="base-card base-home" id="home-base-btn">
-                    <div class="base-content-inner">
-                        <img src="https://i.ibb.co/rCptGSd/STRAYICON.png" alt="首頁">
-                        <span>首頁</span>
-                    </div>
-                </a>
-
-                <div class="center-circle"></div>
-            </div>
-        </div>
-    </section>
-
+    <!-- 🏆 智慧型數字跑動與進場解鎖控制腳本 -->
     <script>
-        /* --- 1. 右側圈圈點擊：平滑滾動到該頁面 --- */
-        const dotItems = document.querySelectorAll('.dot-item');
-        dotItems.forEach(item => {
-            item.addEventListener('click', function() {
-                const targetId = this.getAttribute('data-target');
-                const targetSection = document.getElementById(targetId);
-                targetSection.scrollIntoView({ behavior: 'smooth' });
-            });
-        });
+        document.addEventListener("DOMContentLoaded", () => {
+            const counterElement = document.getElementById("loader-counter");
+            const loaderScreen = document.getElementById("loader-screen");
 
-        /* --- 本壘按鈕：自動平滑滾動回第一頁 --- */
-        document.getElementById('home-base-btn').addEventListener('click', function(e) {
-            e.preventDefault();
-            document.getElementById('page1').scrollIntoView({ behavior: 'smooth' });
-        });
+            let currentPercent = 0;
 
-        /* --- 2. 智慧滾輪監聽：滾動時自動高亮對應的金色圈圈 --- */
-        const sections = document.querySelectorAll('.page-section');
-        window.addEventListener('scroll', () => {
-            let currentActiveSectionId = "";
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (window.pageYOffset >= sectionTop - window.innerHeight / 2) {
-                    currentActiveSectionId = section.getAttribute('id');
+            // 🏆 核心定時器：控制數字增加的速度
+            // 每 20 毫秒跑一次，整個計時動畫大約會在 1.5 到 2 秒內帥氣跑完
+            const progressInterval = setInterval(() => {
+                // 每次隨機增加 1~4%，讓數字跳動看起來有高科技加載的智慧動態感
+                currentPercent += Math.floor(Math.random() * 3) + 1;
+
+                // 確保數值絕對不會超越 100%
+                if (currentPercent >= 100) {
+                    currentPercent = 100;
+                    clearInterval(progressInterval); // 數到 100% 後立刻鎖定、停止定時器
+
+                    // 延續質感：抵達 100% 後稍微短暫停留 250 毫秒，接著觸發帥氣的滑開動畫
+                    setTimeout(() => {
+                        loaderScreen.classList.add("fade-out-launcher");
+                    }, 250);
                 }
-            });
-            dotItems.forEach(item => {
-                item.classList.remove('active');
-                if (item.getAttribute('data-target') === currentActiveSectionId) {
-                    item.classList.add('active');
-                }
-            });
-        });
 
-        /* --- 3. 全螢幕最新消息自動輪播邏輯 --- */
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.carousel-slide');
-        function showSlide(index) {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (index + slides.length) % slides.length;
-            slides[currentSlide].classList.add('active');
-        }
-        function changeSlide(direction) {
-            showSlide(currentSlide + direction);
-        }
-        setInterval(() => { changeSlide(1); }, 5000);
+                // 即時將更新後的數字渲染印到畫面上
+                counterElement.textContent = currentPercent + "%";
+            }, 20);
+        });
     </script>
-    </script> <!-- 這是原有的全域腳本結尾，防錯閉合 -->
-
-    <!-- ==========================================
-       style 區塊：第 3 頁戰績圖 3D 視覺樣式
-       ========================================== -->
-    <style>
-        /* 第 3 頁主容器 */
-        #page3.page-section {
-            background-color: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            width: 100%;
-            padding: 40px;
-            overflow: hidden;
-        }
-
-        /* 3D 視差舞台：啟動深度透視感 */
-        .parallax-stage {
-            perspective: 1000px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 100%;
-        }
-
-        /* 🏆 3D 卡片主體 */
-        .standings-card {
-            position: relative;
-            width: 80vmin;  
-            height: auto;
-            max-width: 650px;
-            background: #111;
-            border: 2px solid #d4af37;
-            border-radius: 16px;
-            padding: 10px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7), 0 0 15px rgba(212, 175, 55, 0.1);
-            transform-style: preserve-3d; /* 讓內部元素支援 3D 層次 */
-            transition: transform 0.1s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-        }
-
-        /* 懸停時外框發光增強 */
-        .standings-card:hover {
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(212, 175, 55, 0.4);
-        }
-
-        /* 戰績圖片本體 */
-        .standings-card img {
-            width: 100%;
-            height: auto;
-            object-fit: contain;
-            border-radius: 10px;
-            display: block;
-            transform: translateZ(30px); /* 讓圖片在 3D 空間中向前浮出 30px */
-            pointer-events: none; /* 防止圖片干擾滑鼠事件 */
-        }
-
-        /* 🏆 金色隨鼠流光保護層 */
-        .card-shine {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 14px;
-            background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.15) 0%, transparent 60%);
-            pointer-events: none;
-            z-index: 5;
-            mix-blend-mode: screen;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            transform: translateZ(31px); /* 流光鎖在圖片最表層 */
-        }
-        .standings-card:hover .card-shine {
-            opacity: 1;
-        }
-
-        /* 📱 手機版 RWD 降級優化：手機上關閉 3D 避免晃動頭暈，改為精緻放大 */
-        @media (max-width: 768px) {
-            #page3.page-section {
-                height: auto !important;
-                padding: 40px 20px;
-            }
-            .standings-card {
-                width: 100%;
-                transform: none !important; /* 關閉 3D 傾斜 */
-                transition: transform 0.3s ease;
-            }
-            .standings-card:active {
-                transform: scale(1.03) !important; /* 手機按住時微幅放大 */
-            }
-            .standings-card img {
-                transform: none !important;
-            }
-            .card-shine {
-                display: none; /* 手機不跑流光 */
-            }
-        }
-    </style>
-
-    <!-- ==========================================
-       HTML 區塊：第 3 頁戰績架構與右側第 3 點選單
-       ========================================== -->
-    <!-- 頁三：球隊戰績 3D 視差區塊 -->
-    <section id="page3" class="page-section">
-        <div class="parallax-stage">
-            <div class="standings-card" id="parallax-card">
-                <!-- 📌 請將 src 裡換成您準備好的戰績圖檔名（如 standings.jpg） -->
-                <img src="https://i.ibb.co/60jtpLKv/2026-HB-0830.png" alt="球隊戰績表">
-                <!-- 流光層 -->
-                <div class="card-shine" id="card-shine-layer"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==========================================
-       JavaScript 區塊：第 3 頁專屬 3D 視差與導覽擴充
-       ========================================== -->
-    <script>
-        /* --- A. 動態擴充右側導覽列：在原本的圈圈清單裡補上第三點 --- */
-        const navContainer = document.querySelector('.dot-navigation');
-        if (navContainer) {
-            // 建立第三個戰績點點
-            const newDot = document.createElement('div');
-            newDot.className = 'dot-item';
-            newDot.setAttribute('data-target', 'page3');
-            newDot.innerHTML = '<span class="dot-label">📊 球隊戰績</span><div class="dot-circle"></div>';
-            navContainer.appendChild(newDot);
-        }
-
-        /* --- B. 擴充原有圈圈的點擊與滾輪監聽邏輯 --- */
-        const allDotItems = document.querySelectorAll('.dot-item');
-        const allSections = document.querySelectorAll('.page-section');
-
-        // 重新為所有點點（包含新老點點）補上點擊流暢滾動
-        allDotItems.forEach(item => {
-            // 先清除舊監聽防止重複綁定
-            item.replaceWith(item.cloneNode(true));
-        });
-        
-        // 重新獲取綁定
-        const refreshedDots = document.querySelectorAll('.dot-item');
-        refreshedDots.forEach(item => {
-            item.addEventListener('click', function() {
-                const targetId = this.getAttribute('data-target');
-                document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
-            });
-        });
-
-        // 即時滾輪動態追蹤第 3 頁
-        window.addEventListener('scroll', () => {
-            let activeId = "";
-            allSections.forEach(section => {
-                if (window.pageYOffset >= section.offsetTop - window.innerHeight / 2) {
-                    activeId = section.getAttribute('id');
-                }
-            });
-            refreshedDots.forEach(item => {
-                item.classList.remove('active');
-                if (item.getAttribute('data-target') === activeId) {
-                    item.classList.add('active');
-                }
-            });
-        });
-
-        /* --- C. 🏆 核心 3D 視差與金色滑鼠流光演算腳本 --- */
-        const card = document.getElementById('parallax-card');
-        const shine = document.getElementById('card-shine-layer');
-
-        if (card && shine && window.innerWidth > 768) {
-            card.addEventListener('mousemove', (e) => {
-                const cardRect = card.getBoundingClientRect();
-                
-                // 計算滑鼠在卡片內部的相對座標位置 (0 到 寬度/高度)
-                const x = e.clientX - cardRect.left;
-                const y = e.clientY - cardRect.top;
-                
-                // 將座標轉化為以中心點為 0 的相對百分比 (-0.5 到 0.5)
-                const xc = cardRect.width / 2;
-                const yc = cardRect.height / 2;
-                const dx = x - xc;
-                const dy = y - yc;
-                
-                // 🏆 計算旋轉角度 (限制在最大傾斜 ±15 度以內，動作精緻不浮誇)
-                const tiltX = (dy / yc) * -15;
-                const tiltY = (dx / xc) * 15;
-                
-                // 讓 3D 卡片產生扭轉
-                card.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
-                
-                // 🏆 金色流光動態跟隨：讓放射漸層的中心點死死跟著滑鼠座標走
-                const px = (x / cardRect.width) * 100;
-                const py = (y / cardRect.height) * 100;
-                shine.style.background = `radial-gradient(circle at ${px}% ${py}%, rgba(212, 175, 55, 0.25) 0%, transparent 60%)`;
-            });
-
-            // 當滑鼠離開卡片時，平滑地校正回原位並熄滅流光
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = `rotateX(0deg) rotateY(0deg)`;
-                card.style.transition = `transform 0.5s ease`;
-            });
-
-            card.addEventListener('mouseenter', () => {
-                card.style.transition = `none`; // 進入時取消延遲，手感才即時
-            });
-        }
-    </script>
-</body>
-</html>
-
 </body>
 </html>
